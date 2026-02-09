@@ -232,16 +232,20 @@
     padding-left: 0;
     padding-right: 0;
   }
-/* ===== ASSINATURA ===== */
+/* ===== ASSINATURA FIXA NO RODAPÉ ===== */
 .assinatura{
-  width: 100%;
+  position: fixed;
+  bottom: 8px;                 /* distância do fim da tela */
+  left: 50%;
+  transform: translateX(-50%); /* centraliza perfeitamente */
   text-align: center;
-  margin-top: 40px;
-  margin-bottom: 10px;
   font-size: 11px;
   font-weight: 700;
   color: rgba(255,255,255,.6);
-  letter-spacing: 0.5px;
+  letter-spacing: 0.6px;
+  z-index: 3;
+  pointer-events: none;        /* não atrapalha cliques */
+  white-space: nowrap;
 }
 </style>
 </head>
