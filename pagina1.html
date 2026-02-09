@@ -232,10 +232,12 @@
     padding-left: 0;
     padding-right: 0;
   }
+}  /* <-- FECHA O @media AQUI */
+
 /* ===== ASSINATURA FIXA NO RODAPÉ (ESTÁTICA DESDE O LOAD) ===== */
 .assinatura{
-  position: fixed;            /* FIXA NA TELA, NÃO NO CONTEÚDO */
-  bottom: 6px;                /* SEMPRE NO FIM DA TELA */
+  position: fixed;
+  bottom: 6px;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
@@ -246,8 +248,9 @@
   color: rgba(255,255,255,.6);
   letter-spacing: 0.6px;
 
-  z-index: 999;               /* FICA ACIMA DE TUDO */
-  pointer-events: none;       /* NÃO ATRAPALHA CLIQUE */
+  z-index: 999;
+  pointer-events: none;
+  white-space: nowrap;
 }
 </style>
 </head>
