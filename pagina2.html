@@ -314,6 +314,12 @@ label{
   pointer-events: none;
   white-space: nowrap;
 }
+  /* DESTAQUE SUAVE DO REGISTRO SELECIONADO (não muda o fundo) */
+.info.selecionado{
+  outline: 3px solid rgba(255, 212, 0, .75); /* amarelo suave */
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px rgba(255, 212, 0, .25);
+}
 </style>
 </head>
 
@@ -534,12 +540,14 @@ function carregar(){
     const panel = d.querySelector('.edit-panel');
 
     cb.onchange = () => {
-      toggle.style.display = cb.checked ? 'inline-block' : 'none';
-      if(!cb.checked){
-        panel.style.display = 'none';
-        toggle.textContent = '▼';
-      }
-    };
+  d.classList.toggle('selecionado', cb.checked);  // <-- ADICIONE ISTO
+
+  toggle.style.display = cb.checked ? 'inline-block' : 'none';
+  if(!cb.checked){
+    panel.style.display = 'none';
+    toggle.textContent = '▼';
+  }
+};
 
     toggle.onclick = () => {
       const aberto = panel.style.display === 'block';
