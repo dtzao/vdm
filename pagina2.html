@@ -1,708 +1,266 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>PÁGINA 2 - VISUALIZAÇÃO</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PÁGINA 2 - VISUALIZAÇÃO</title>
 
-  <style>
-  :root{
-    --bg:#000;
-    --text:#fff;
-    --muted:rgba(255,255,255,.78);
-    --card:rgba(255,255,255,.06);
-    --border:rgba(255,255,255,.16);
-    --accent:#ff2b2b;
+<style>
+:root{
+  --bg:#000;
+  --panel:#000;
+  --text:#fff;
+  --muted:rgba(255,255,255,.75);
+  --border:rgba(255,255,255,.18);
+  --accent:#ffd400; /* AMARELO */
+  --maxw:820px;
+  --radius:14px;
+  --pad:12px;
+  --font:clamp(16px,1.4vw,22px);
+  --small:clamp(12px,1vw,15px);
+}
 
-    /* centralizado e compacto (igual a página 1) */
-    --maxw: 820px;
-    --radius: 14px;
-    --pad: 12px;
+*{box-sizing:border-box}
 
-    /* mantém “tamanho ótimo” das infos */
-    --font: clamp(16px, 1.3vw, 22px);
-    --small: clamp(12px, 1vw, 16px);
-  }
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,sans-serif;
+  padding:16px;
+  text-transform:uppercase;
+  letter-spacing:.35px;
+}
 
-  *{ box-sizing:border-box; }
+.container{
+  max-width:var(--maxw);
+  margin:0 auto;
+  text-align:center;
+  padding-bottom:80px;
+}
 
-  body{
-    margin:0;
-    background:var(--bg);
-    color:var(--text);
-    font-family: Arial, sans-serif;
-    padding:16px;
-    text-transform: uppercase;
-    letter-spacing:.35px;
-  }
+label{
+  display:block;
+  font-weight:1000;
+  font-size:var(--small);
+  color:var(--muted);
+  margin-bottom:6px;
+}
 
-  /* CENTRALIZADO IGUAL A PÁGINA 1 */
-  .container{
-    max-width: var(--maxw);
-    margin: 0 auto;
-    text-align: center;
-    padding-bottom: 90px;
-  }
+.field{
+  width:100%;
+  max-width:360px;
+  margin:0 auto;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:#000;
+  color:#fff;
+  font-weight:1000;
+  padding:10px 12px;
+  text-align:center;
+  font-size:var(--font);
+}
 
-  label{
-    display:block;
-    font-weight: 1000;
-    font-size: var(--small);
-    color: var(--muted);
-    margin-bottom: 6px;
-  }
+.alerta-box{
+  display:none;
+  background:var(--accent);
+  color:#000;
+  font-weight:1000;
+  font-size:var(--font);
+  padding:10px;
+  border-radius:var(--radius);
+  margin:12px 0;
+}
 
-  .field{
-    width: 100%;
-    max-width: 360px;
-    border-radius: 12px;
-    border: 1px solid var(--border);
-    background: rgba(255,255,255,.08);
-    color: var(--text);
-    font-weight: 1000;
-    padding: 10px 12px;
-    text-align: center;
-    font-size: var(--font);
-    outline: none;
-  }
-  .field:focus{
-    outline: 3px solid rgba(255,255,255,.9);
-    outline-offset: 2px;
-  }
+.info{
+  margin:12px auto;
+  padding:var(--pad);
+  background:rgba(255,255,255,.06);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+}
 
-  .alerta-box{
-    width: 100%;
-    background: var(--accent);
-    color: #fff;
-    font-weight: 1000;
-    font-size: var(--font);
-    padding: 10px 12px;
-    display: none;
-    margin: 12px 0;
-    white-space: pre-wrap;
-    border-radius: var(--radius);
-    border: 1px solid rgba(255,255,255,.25);
-    text-align: center;
-  }
+.topline{
+  text-align:center;
+}
 
-  .alerta-input{
-    display:none;
-    margin: 10px auto;
-    width: 100%;
-    max-width: var(--maxw);
-    background: rgba(255,255,255,.08);
-    border: 1px solid var(--border);
-    color: #fff;
-    font-weight: 1000;
-    font-size: var(--font);
-    padding: 12px;
-    border-radius: var(--radius);
-    outline:none;
-    white-space: pre-wrap;
-    text-align: center;
-  }
+.time{
+  font-weight:1000;
+  font-size:var(--font);
+}
 
-  .info{
-    margin: 10px auto;
-    padding: var(--pad);
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    text-align: center;
-  }
+.topo{
+  color:var(--accent);
+  font-weight:1000;
+  font-size:var(--small);
+  margin-top:4px;
+}
 
-  .topline{
-    display:flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
+.meta{
+  margin-top:10px;
+  display:grid;
+  gap:10px;
+  font-size:var(--font);
+}
 
-  .leftmeta{
-    flex:1;
-    min-width: 220px;
-    text-align:left;
-  }
+.meta .line{
+  background:rgba(255,255,255,.05);
+  border-radius:12px;
+  padding:10px;
+}
 
-  .time{
-    font-weight: 1000;
-    font-size: var(--font);
-  }
+.meta b{
+  color:var(--accent);
+  display:block;
+  margin-bottom:4px;
+}
 
-  /* ✅ DESTACA “27 º BPM/M - COP...” EM VERMELHO */
-  .topo{
-    margin-top: 4px;
-    font-weight: 1000;
-    font-size: var(--small);
-    color: var(--accent);
-  }
+.sel{
+  margin-top:8px;
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  font-weight:1000;
+  font-size:var(--small);
+}
 
-  .rightmeta{
-    display:flex;
-    align-items:center;
-    gap: 10px;
-    justify-content:flex-end;
-    flex-wrap: wrap;
-  }
+.toggle{
+  display:none;
+  margin-top:8px;
+  padding:8px 14px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:#000;
+  color:#fff;
+  font-weight:1000;
+  cursor:pointer;
+}
 
-  .sel{
-    display:flex;
-    align-items:center;
-    gap: 8px;
-    font-weight: 1000;
-    font-size: var(--small);
-    color: var(--muted);
-  }
+.edit-panel{
+  display:none;
+  margin-top:12px;
+  border-top:1px dashed var(--border);
+  padding-top:12px;
+}
 
-  .sel input{ transform: scale(1.2); }
+.edit-field{
+  width:100%;
+  margin-top:6px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:#000;
+  color:#fff;
+  padding:10px;
+  font-weight:1000;
+  text-align:center;
+}
 
-  .toggle{
-    display:none;
-    border: 1px solid var(--border);
-    background: rgba(255,255,255,.08);
-    color: #fff;
-    border-radius: 12px;
-    padding: 10px 14px;
-    font-weight: 1000;
-    cursor: pointer;
-    font-size: var(--small);
-    line-height: 1;
-  }
+.actions{
+  margin-top:10px;
+  display:flex;
+  gap:10px;
+  justify-content:center;
+}
 
-  .meta{
-    margin-top: 10px;
-    display: grid;
-    gap: 10px;
-    text-align: left;
-    font-size: var(--font);
-    font-weight: 1000;
-    white-space: pre-wrap;
-  }
+.btn{
+  padding:10px 16px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:#000;
+  color:#fff;
+  font-weight:1000;
+  cursor:pointer;
+}
 
-  .meta .line{
-    padding: 8px 10px;
-    border-radius: 12px;
-    background: rgba(255,255,255,.05);
-  }
+.btn.primary{border-color:var(--accent)}
+.btn.danger{color:var(--accent)}
 
-  /* ✅ DESTACA OS NOMES QRU/QTH/CARACTERÍSTICAS EM VERMELHO */
-  .meta b{
-    color: var(--accent);
-  }
+.nav-button{
+  position:fixed;
+  bottom:12px;
+  left:12px;
+  background:#fff;
+  color:#000;
+  font-weight:1000;
+  padding:10px 14px;
+  border-radius:12px;
+  text-decoration:none;
+}
 
-  .edit-panel{
-    margin-top: 12px;
-    padding-top: 12px;
-    border-top: 1px dashed rgba(255,255,255,.25);
-    display:none;
-    text-align:center;
-  }
-
-  .grid3{
-    display:grid;
-    grid-template-columns: 90px 1fr 1fr;
-    gap: 10px;
-    align-items:start;
-  }
-
-  .row2{
-    display:grid;
-    grid-template-columns: 140px 1fr;
-    gap: 10px;
-    align-items:start;
-    margin-top: 10px;
-  }
-
-  @media (max-width: 640px){
-    .grid3{ grid-template-columns: 1fr; }
-    .row2{ grid-template-columns: 1fr; }
-    .leftmeta{ text-align:center; }
-    .topline{ justify-content:center; }
-  }
-
-  .edit-field{
-    width:100%;
-    border-radius:12px;
-    border:1px solid var(--border);
-    padding:10px 12px;
-    background: rgba(255,255,255,.08);
-    color:#fff;
-    font-weight:1000;
-    outline:none;
-    font-size: var(--small);
-    text-align:center;
-  }
-
-  textarea.edit-field{
-    text-align:left;
-    min-height: 70px;
-    resize: vertical;
-  }
-
-  .actions{
-    margin-top: 12px;
-    display:flex;
-    gap: 10px;
-    justify-content:center;
-    flex-wrap:wrap;
-  }
-
-  .btn{
-    padding: 10px 14px;
-    border-radius: 12px;
-    border: 1px solid var(--border);
-    background: rgba(255,255,255,.08);
-    color: #fff;
-    font-weight: 1000;
-    cursor:pointer;
-    font-size: var(--small);
-  }
-
-  .btn.primary{
-    border-color: rgba(255,43,43,.6);
-  }
-  .btn.danger{
-    color: var(--accent);
-    background: rgba(255,43,43,.08);
-    border-color: rgba(255,43,43,.4);
-  }
-
-  .nav-button{
-    position: fixed;
-    bottom: 12px;
-    left: 12px;
-    background: #fff;
-    color: #000;
-    font-weight: 1000;
-    padding: 10px 14px;
-    border-radius: 12px;
-    text-decoration:none;
-    z-index: 10;
-  }
-
-  .delete-button{
-    position: fixed;
-    bottom: 12px;
-    right: 12px;
-    background: var(--accent);
-    color: #fff;
-    border:none;
-    font-weight: 1000;
-    padding: 10px 14px;
-    border-radius: 12px;
-    cursor:pointer;
-    z-index: 10;
-  }
-
-  .floating-center{
-    position: fixed;
-    bottom: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
-  }
-
-  .big-button{
-    padding: 10px 14px;
-    background: var(--accent);
-    color: #fff;
-    border: none;
-    border-radius: 12px;
-    font-weight: 1000;
-    cursor:pointer;
-  }
-
-  .tooltip{
-    display:none;
-    position: fixed;
-    bottom: 58px;
-    left: 50%;
-    transform: translateX(-50%);
-    background:#fff;
-    color:#000;
-    padding: 8px 12px;
-    border-radius: 12px;
-    font-weight: 1000;
-    font-size: var(--small);
-    z-index: 12;
-  }
-
-  .assinatura{
-    position: fixed;
-    bottom: 2px;
-    right: 12px;
-    color: rgba(255,255,255,.55);
-    font-size: 10px;
-  }
+.delete-button{
+  position:fixed;
+  bottom:12px;
+  right:12px;
+  background:var(--accent);
+  color:#000;
+  font-weight:1000;
+  padding:10px 14px;
+  border-radius:12px;
+  border:none;
+  cursor:pointer;
+}
 </style>
 </head>
 
 <body>
-  <main class="container">
-    <section class="alerta-box" id="alertaBox" aria-live="polite">
-      <div id="alertaTexto"></div>
-      <div class="alerta-actions">
-        <button class="smallbtn" id="btnEditarAlerta" type="button">EDITAR</button>
-        <button class="smallbtn danger" id="btnRemoverAlerta" type="button">REMOVER</button>
+<main class="container">
+
+<label>DATA</label>
+<input type="date" id="dataSelecionada" class="field">
+
+<div id="dados"></div>
+
+</main>
+
+<a href="pagina1.html" class="nav-button">⬅ REGISTRO</a>
+<button class="delete-button" onclick="excluirSelecionados()">🗑 APAGAR</button>
+
+<script>
+const inputData=document.getElementById('dataSelecionada');
+const dados=document.getElementById('dados');
+
+inputData.value=localStorage.getItem('dataSelecionada')||'';
+inputData.onchange=()=>{localStorage.setItem('dataSelecionada',inputData.value);carregar()}
+
+function carregar(){
+  dados.innerHTML='';
+  const data=inputData.value;
+  const registros=JSON.parse(localStorage.getItem('registrosPorDia'))||{};
+  (registros[data]||[]).forEach((r,i)=>{
+    const d=document.createElement('div');
+    d.className='info';
+    d.innerHTML=`
+      <div class="topline">
+        <div class="time">${r.horario||''}</div>
+        <div class="topo">${r.prefixo||''} ${r.unidade||''} - ${r.status||''}</div>
       </div>
-    </section>
 
-    <div style="margin-top:6px;">
-      <label for="dataSelecionada">DATA</label><br>
-      <input type="date" id="dataSelecionada" class="field"/>
-    </div>
+      <div class="meta">
+        ${r.qru?`<div class="line"><b>QRU</b>${r.qru}</div>`:''}
+        ${r.qth?`<div class="line"><b>QTH</b>${r.qth}</div>`:''}
+        ${r.caracteristicas?`<div class="line"><b>CARACTERÍSTICAS</b>${r.caracteristicas}</div>`:''}
+      </div>
 
-    <textarea id="inputAlerta" class="alerta-input" placeholder="DIGITE O ALERTA E PRESSIONE CTRL+ENTER PARA SALVAR"></textarea>
+      <div class="sel">
+        <input type="checkbox" data-i="${i}">
+        SELECIONAR
+      </div>
+    `;
+    dados.appendChild(d);
+  });
+}
 
-    <div id="dados" aria-live="polite" style="margin-top:14px;"></div>
-  </main>
+function excluirSelecionados(){
+  const data=inputData.value;
+  const registros=JSON.parse(localStorage.getItem('registrosPorDia'))||{};
+  const lista=registros[data]||[];
+  const checks=[...document.querySelectorAll('input[type=checkbox]:checked')].map(c=>+c.dataset.i);
+  registros[data]=lista.filter((_,i)=>!checks.includes(i));
+  localStorage.setItem('registrosPorDia',JSON.stringify(registros));
+  carregar();
+}
 
-  <div class="tooltip" id="dicaAtalhos">CTRL+ENTER: SALVAR ALERTA | CTRL+X: REMOVER ALERTA</div>
-
-  <a href="pagina1.html" class="nav-button">⬅️ REGISTRO</a>
-  <button class="delete-button" type="button" id="btnApagarSelecionados">🗑️ APAGAR</button>
-
-  <div class="floating-center">
-    <button class="big-button" type="button" id="btnMostrarAlerta">+ ALERTA GERAL</button>
-  </div>
-
-  <div class="assinatura">SD PM 154.466-7 ANDERSON SILVA</div>
-
-  <script>
-    const inputData = document.getElementById('dataSelecionada');
-    const dadosContainer = document.getElementById('dados');
-
-    const alertaBox = document.getElementById('alertaBox');
-    const alertaTexto = document.getElementById('alertaTexto');
-    const inputAlerta = document.getElementById('inputAlerta');
-    const dicaAtalhos = document.getElementById('dicaAtalhos');
-
-    const btnMostrarAlerta = document.getElementById('btnMostrarAlerta');
-    const btnEditarAlerta = document.getElementById('btnEditarAlerta');
-    const btnRemoverAlerta = document.getElementById('btnRemoverAlerta');
-    const btnApagarSelecionados = document.getElementById('btnApagarSelecionados');
-
-    const STORAGE_DATA_KEY = 'dataSelecionada';
-    const STORAGE_REG_KEY = 'registrosPorDia';
-    const STORAGE_ALERT_KEY = 'alertasPorDia';
-
-    function safeParseJSON(value, fallback) {
-      try { return value ? JSON.parse(value) : fallback; } catch { return fallback; }
-    }
-    function getRegistros(){ return safeParseJSON(localStorage.getItem(STORAGE_REG_KEY), {}); }
-    function setRegistros(obj){ localStorage.setItem(STORAGE_REG_KEY, JSON.stringify(obj)); }
-    function getAlertas(){ return safeParseJSON(localStorage.getItem(STORAGE_ALERT_KEY), {}); }
-    function setAlertas(obj){ localStorage.setItem(STORAGE_ALERT_KEY, JSON.stringify(obj)); }
-
-    // COMPAT: SUPORTA FORMATO NOVO E ANTIGO
-    function normalizarRegistro(item) {
-      if (item && typeof item === 'object' && !Array.isArray(item) && !item.campos) {
-        return {
-          horario: item.horario || '',
-          prefixo: item.prefixo || '',
-          unidade: item.unidade || '',
-          status: item.status || '',
-          qru: item.qru || '',
-          qth: item.qth || '',
-          caracteristicas: item.caracteristicas || ''
-        };
-      }
-      const campos = (item && item.campos) ? item.campos : [];
-      const [sigla, unidade, cop, qru, qth, caracteristicas] = campos;
-      return {
-        horario: item?.horario || '',
-        prefixo: (sigla || '').toString(),
-        unidade: (unidade || '').toString(),
-        status: (cop || '').toString(),
-        qru: (qru || '').toString(),
-        qth: (qth || '').toString(),
-        caracteristicas: (caracteristicas || '').toString()
-      };
-    }
-
-    function formatarTopo(reg) {
-      const p = (reg.prefixo || '').trim();
-      const u = (reg.unidade || '').trim();
-      const s = (reg.status || '').trim();
-      const left = [p, u].filter(Boolean).join(' ');
-      if (!left && !s) return '';
-      if (!left) return s;
-      if (!s) return left;
-      return `${left} - ${s}`;
-    }
-
-    function escapeHTML(str){
-      return String(str)
-        .replaceAll('&', '&amp;')
-        .replaceAll('<', '&lt;')
-        .replaceAll('>', '&gt;')
-        .replaceAll('"', '&quot;')
-        .replaceAll("'", '&#039;');
-    }
-
-    function carregarDados() {
-      const data = inputData.value;
-      const registros = getRegistros();
-      const alertas = getAlertas();
-
-      dadosContainer.innerHTML = '';
-
-      const alertaDoDia = alertas[data];
-      if (alertaDoDia) {
-        alertaTexto.textContent = alertaDoDia;
-        alertaBox.style.display = 'block';
-        dicaAtalhos.style.display = 'block';
-      } else {
-        alertaBox.style.display = 'none';
-        dicaAtalhos.style.display = 'none';
-      }
-
-      const lista = (registros[data] || []).map(normalizarRegistro);
-
-      lista.forEach((reg, index) => {
-        const topo = formatarTopo(reg);
-
-        const card = document.createElement('div');
-        card.className = 'info';
-        card.dataset.index = String(index);
-
-        card.innerHTML = `
-          <div class="topline">
-            <div class="leftmeta">
-              <div class="time">${escapeHTML(reg.horario || '')}</div>
-              ${topo ? `<div class="topo">${escapeHTML(topo)}</div>` : ''}
-            </div>
-
-            <div class="rightmeta">
-              <label class="sel">
-                <input type="checkbox" data-index="${index}" />
-                SELECIONAR
-              </label>
-              <button type="button" class="toggle" data-action="toggle" aria-label="ABRIR/FECHAR EDIÇÃO">▼</button>
-            </div>
-          </div>
-
-          <div class="meta">
-            ${reg.qru ? `<div class="line"><b>QRU:</b>\n${escapeHTML(reg.qru)}</div>` : ''}
-            ${reg.qth ? `<div class="line"><b>QTH:</b>\n${escapeHTML(reg.qth)}</div>` : ''}
-            ${reg.caracteristicas ? `<div class="line"><b>CARACTERÍSTICAS:</b>\n${escapeHTML(reg.caracteristicas)}</div>` : ''}
-          </div>
-
-          <div class="edit-panel">
-            <div class="grid3">
-              <div>
-                <label>PREFIXO</label>
-                <input class="edit-field" name="prefixo" maxlength="3" inputmode="numeric" value="${escapeHTML(reg.prefixo)}">
-              </div>
-
-              <div>
-                <label>UNIDADE</label>
-                <select class="edit-field" name="unidade">
-                  ${['º BPM/M','º CPTRAN','º CHOQUE','º BAEP','º RODOVIÁRIA'].map(v =>
-                    `<option value="${escapeHTML(v)}" ${v === reg.unidade ? 'selected' : ''}>${escapeHTML(v)}</option>`
-                  ).join('')}
-                </select>
-              </div>
-
-              <div>
-                <label>STATUS</label>
-                <select class="edit-field" name="status">
-                  ${[
-                    'NIHIL DE COP',
-                    'COP SEM IMAGENS',
-                    'COP LADO ESQUERDO',
-                    'COP LADO DIREITO',
-                    'COP EM AMBOS OS LADOS'
-                  ].map(v =>
-                    `<option value="${escapeHTML(v)}" ${v === reg.status ? 'selected' : ''}>${escapeHTML(v)}</option>`
-                  ).join('')}
-                </select>
-              </div>
-            </div>
-
-            <div class="row2">
-              <label>QRU</label>
-              <textarea class="edit-field" name="qru" rows="3">${escapeHTML(reg.qru)}</textarea>
-            </div>
-
-            <div class="row2">
-              <label>QTH</label>
-              <textarea class="edit-field" name="qth" rows="3">${escapeHTML(reg.qth)}</textarea>
-            </div>
-
-            <div class="row2">
-              <label>CARACTERÍSTICAS</label>
-              <textarea class="edit-field" name="caracteristicas" rows="3">${escapeHTML(reg.caracteristicas)}</textarea>
-            </div>
-
-            <div class="actions">
-              <button type="button" class="btn primary" data-action="salvar">SALVAR</button>
-              <button type="button" class="btn danger" data-action="cancelar">CANCELAR</button>
-            </div>
-          </div>
-        `;
-
-        dadosContainer.appendChild(card);
-      });
-    }
-
-    // REGRAS:
-    // - CHECKBOX MARCADO => MOSTRA A SETA
-    // - SETA (▼) => ABRE/FECHA EDITOR
-    // - DESMARCOU => FECHA E ESCONDE SETA
-    dadosContainer.addEventListener('change', (e) => {
-      const cb = e.target.closest('input[type="checkbox"][data-index]');
-      if (!cb) return;
-
-      const card = cb.closest('.info');
-      const toggle = card.querySelector('.toggle');
-      const panel = card.querySelector('.edit-panel');
-
-      if (cb.checked) {
-        toggle.style.display = 'inline-block';
-      } else {
-        toggle.style.display = 'none';
-        toggle.textContent = '▼';
-        panel.style.display = 'none';
-      }
-    });
-
-    dadosContainer.addEventListener('click', (e) => {
-      const card = e.target.closest('.info');
-      if (!card) return;
-
-      const btn = e.target.closest('button[data-action]');
-      if (!btn) return;
-
-      const action = btn.dataset.action;
-      const index = Number(card.dataset.index);
-      const data = inputData.value;
-
-      const registros = getRegistros();
-      const lista = (registros[data] || []).map(normalizarRegistro);
-
-      const panel = card.querySelector('.edit-panel');
-
-      if (action === 'toggle') {
-        const isOpen = panel.style.display === 'block';
-        panel.style.display = isOpen ? 'none' : 'block';
-        btn.textContent = isOpen ? '▼' : '▲';
-        if (!isOpen) {
-          const first = panel.querySelector('input,select,textarea');
-          if (first) first.focus();
-        }
-        return;
-      }
-
-      if (action === 'cancelar') {
-        carregarDados();
-        return;
-      }
-
-      if (action === 'salvar') {
-        const item = lista[index];
-        if (!item) return;
-
-        item.prefixo = panel.querySelector('[name="prefixo"]').value.trim();
-        item.unidade = panel.querySelector('[name="unidade"]').value;
-        item.status = panel.querySelector('[name="status"]').value;
-        item.qru = panel.querySelector('[name="qru"]').value.trim();
-        item.qth = panel.querySelector('[name="qth"]').value.trim();
-        item.caracteristicas = panel.querySelector('[name="caracteristicas"]').value.trim();
-
-        // SALVA SEMPRE NO FORMATO NOVO (MELHOR)
-        registros[data] = lista.map(x => ({ ...x }));
-        setRegistros(registros);
-
-        carregarDados();
-      }
-    });
-
-    function mostrarInputAlerta() {
-      inputAlerta.style.display = 'block';
-      inputAlerta.focus();
-    }
-
-    function salvarAlerta() {
-      const texto = inputAlerta.value.trim();
-      if (!texto) return;
-
-      const data = inputData.value;
-      if (!data) {
-        alert('SELECIONE UMA DATA!');
-        inputData.focus();
-        return;
-      }
-
-      const alertas = getAlertas();
-      alertas[data] = texto;
-      setAlertas(alertas);
-
-      inputAlerta.value = '';
-      inputAlerta.style.display = 'none';
-      carregarDados();
-    }
-
-    function editarAlerta() {
-      const data = inputData.value;
-      const alertas = getAlertas();
-      if (!data) return;
-      if (alertas[data]) {
-        inputAlerta.value = alertas[data];
-        mostrarInputAlerta();
-      }
-    }
-
-    function removerAlerta() {
-      const data = inputData.value;
-      const alertas = getAlertas();
-      if (!data) return;
-      delete alertas[data];
-      setAlertas(alertas);
-      carregarDados();
-    }
-
-    function excluirSelecionados() {
-      const data = inputData.value;
-      const registros = getRegistros();
-      const lista = (registros[data] || []).map(normalizarRegistro);
-
-      const checkboxes = document.querySelectorAll('input[type="checkbox"][data-index]:checked');
-      const indices = new Set(Array.from(checkboxes).map(cb => Number(cb.dataset.index)));
-
-      registros[data] = lista.filter((_, i) => !indices.has(i)).map(x => ({...x}));
-      setRegistros(registros);
-      carregarDados();
-    }
-
-    // EVENTOS
-    inputData.value = localStorage.getItem(STORAGE_DATA_KEY) || '';
-    inputData.addEventListener('change', () => {
-      localStorage.setItem(STORAGE_DATA_KEY, inputData.value);
-      carregarDados();
-    });
-
-    btnMostrarAlerta.addEventListener('click', mostrarInputAlerta);
-    btnEditarAlerta.addEventListener('click', editarAlerta);
-    btnRemoverAlerta.addEventListener('click', removerAlerta);
-    btnApagarSelecionados.addEventListener('click', excluirSelecionados);
-
-    inputAlerta.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && e.ctrlKey) {
-        e.preventDefault();
-        salvarAlerta();
-      }
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.ctrlKey && e.key.toLowerCase() === 'x') {
-        e.preventDefault();
-        removerAlerta();
-      }
-    });
-
-    carregarDados();
-  </script>
+carregar();
+</script>
 </body>
 </html>
