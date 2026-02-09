@@ -510,11 +510,6 @@ body.telao-pequeno { zoom: 0.86; }
             <textarea id="qth-${idGrupo}" name="qth" class="field"></textarea>
           </div>
 
-          <div class="linha-campo">
-            <div class="rotulo">CARACTERÍSTICAS</div>
-            <textarea id="caract-${idGrupo}" name="caracteristicas" class="field"></textarea>
-          </div>
-
           <div class="actions">
             <button type="submit" class="button">REGISTRAR</button>
             <button type="button" class="button secondary" data-action="remover">REMOVER GRUPO</button>
@@ -548,8 +543,7 @@ body.telao-pequeno { zoom: 0.86; }
           status: (fd.get('status') || '').toString(),
           qru: (fd.get('qru') || '').toString().trim(),
           qth: (fd.get('qth') || '').toString().trim(),
-          caracteristicas: (fd.get('caracteristicas') || '').toString().trim(),
-        };
+       };
 
         const registros = getRegistros();
         registros[data] = [registro, ...(registros[data] || [])];
