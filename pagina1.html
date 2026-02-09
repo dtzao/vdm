@@ -6,194 +6,197 @@
   <title>PÁGINA 1 - REGISTRO</title>
 
   <style>
-    :root{
-      --bg: #c40000;                  /* FUNDO VERMELHO (PÁGINA 1) */
-      --panel: #000;                  /* CONTEÚDO PRETO */
-      --text: #fff;                   /* TEXTO BRANCO */
-      --muted: rgba(255,255,255,.75);
-      --border: rgba(255,255,255,.22);
-      --btn: #fff;
-      --btnText: #000;
-      --btnHover: rgba(255,255,255,.85);
+  :root{
+    --bg: #c40000;                  /* FUNDO VERMELHO */
+    --panel: #000;                  /* CARD PRETO */
+    --text: #fff;
+    --muted: rgba(255,255,255,.72);
+    --border: rgba(255,255,255,.20);
 
-      --radius: 14px;
-      --pad: 14px;
+    /* MAIS ESTREITO (SOBRA LATERAL NO TELÃO) */
+    --maxw: 620px;
 
-      /* Ajuste rápido de tamanho */
-      --maxw: 820px;
-      --font: 16px;
-      --fontSmall: 13px;
-    }
+    /* MAIS COMPACTO */
+    --radius: 14px;
+    --pad: 10px;
 
-    *{ box-sizing: border-box; }
+    /* FONTES */
+    --label: 12px;                  /* rótulos menores */
+    --inputFont: clamp(22px, 2.2vw, 34px);  /* <<< TEXTO DIGITADO GRANDE */
+    --btnFont: 14px;
 
-    body{
-      margin:0;
-      background: var(--bg);
-      font-family: Arial, sans-serif;
-      color: var(--text);
-      padding: 18px;
-      font-size: var(--font);
-      text-transform: uppercase;
-      letter-spacing: .35px;
-    }
+    --btnBg: #fff;
+    --btnText: #000;
+  }
 
-    /* TUDO CENTRALIZADO COMO COLUNA */
-    .container{
-      max-width: var(--maxw);
-      margin: 0 auto;
-      display: grid;
-      justify-items: center; /* centraliza horizontalmente */
-      gap: 14px;
-      padding-bottom: 90px;
-    }
+  *{ box-sizing: border-box; }
 
-    .panel{
-      width: 100%;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: var(--pad);
-    }
+  body{
+    margin:0;
+    background: var(--bg);
+    font-family: Arial, sans-serif;
+    color: var(--text);
+    padding: 12px;
+    text-transform: uppercase;
+    letter-spacing: .35px;
+  }
 
-    .topbar{
-      width: 100%;
-      display: grid;
-      justify-items: center;
-      gap: 12px;
-    }
+  .container{
+    max-width: var(--maxw);
+    margin: 0 auto;
+    display: grid;
+    justify-items: center;
+    gap: 10px;
+    padding-bottom: 70px;
+  }
 
-    label{
-      font-weight: 1000;
-      display: block;
-      margin-bottom: 6px;
-      font-size: var(--fontSmall);
-      color: var(--muted);
-      text-align: center;
-    }
+  .panel{
+    width: 100%;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--pad);
+  }
 
-    .hint{
-      font-size: 12px;
-      opacity: .9;
-      text-transform: none;
-      letter-spacing: 0;
-      text-align: center;
-      color: rgba(255,255,255,.75);
-      margin-top: 6px;
-    }
+  .topbar{
+    width: 100%;
+    display: grid;
+    justify-items: center;
+    gap: 8px;
+  }
 
-    /* CAMPOS: PRETO + TEXTO BRANCO + CENTRALIZADO */
-    .field{
-      width: 100%;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: #000;
-      color: #fff;
-      font-weight: 1000;
-      padding: 10px 12px;
-      min-height: 42px;
-      outline: none;
-      text-align: center;
-    }
-    .field:focus{
-      outline: 3px solid rgba(255,255,255,.9);
-      outline-offset: 2px;
-    }
+  label{
+    font-weight: 1000;
+    display: block;
+    margin-bottom: 6px;
+    font-size: var(--label);
+    color: var(--muted);
+    text-align: center;
+  }
 
-    textarea.field{
-      min-height: 84px;
-      resize: vertical;
-      line-height: 1.25;
-      text-align: center; /* do jeito que você quer (coluna central) */
-    }
+  .hint{
+    font-size: 11px;
+    opacity: .9;
+    text-transform: none;
+    letter-spacing: 0;
+    text-align: center;
+    color: rgba(255,255,255,.65);
+    margin-top: 4px;
+  }
 
-    fieldset{ border:0; padding:0; margin:0; }
-    legend{
-      font-weight: 1000;
-      margin-bottom: 12px;
-      text-align: center;
-      color: #fff;
-    }
+  /* CAMPOS: PRETO/BRANCO + TEXTO DIGITADO GRANDE */
+  .field{
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: #000;
+    color: #fff;
+    font-weight: 1000;
+    padding: 10px 12px;
+    min-height: 44px;
+    outline: none;
+    text-align: center;
+    font-size: var(--inputFont);   /* <<< AQUI AUMENTA MUITO */
+    line-height: 1.15;
+  }
 
-    /* GRID DOS 3 CAMPOS DE CIMA (CENTRALIZADO) */
-    .linha-unidade{
-      display: grid;
-      grid-template-columns: 90px 1fr 1fr;
-      gap: 10px;
-      justify-items: stretch;
-      align-items: start;
-    }
-    @media (max-width: 680px){
-      .linha-unidade{ grid-template-columns: 1fr; }
-    }
+  .field:focus{
+    outline: 3px solid rgba(255,255,255,.9);
+    outline-offset: 2px;
+  }
 
-    /* LINHAS QRU/QTH/CARAC - rótulo em cima + campo embaixo (CENTRAL) */
-    .linha-campo{
-      display: grid;
-      gap: 8px;
-      margin: 12px 0;
-      justify-items: center;
-    }
+  textarea.field{
+    min-height: 62px;              /* menor pra ocupar menos */
+    resize: vertical;
+    text-align: center;
+  }
 
-    .rotulo{
-      width: 100%;
-      text-align: center;
-      font-weight: 1000;
-      color: #fff;
-    }
+  fieldset{ border:0; padding:0; margin:0; }
 
-    .actions{
-      display:flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: center;
-      margin-top: 12px;
-    }
+  legend{
+    font-weight: 1000;
+    margin-bottom: 8px;
+    text-align: center;
+    color: #fff;
+    font-size: 16px;
+  }
 
-    .button{
-      padding: 10px 16px;
-      background: var(--btn);
-      color: var(--btnText);
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      font-weight: 1000;
-      text-transform: uppercase;
-    }
-    .button:hover{ background: var(--btnHover); }
+  /* 3 campos de cima mais compactos */
+  .linha-unidade{
+    display: grid;
+    grid-template-columns: 90px 1fr 1fr;
+    gap: 8px;
+    align-items: start;
+  }
 
-    .button.secondary{
-      background: transparent;
-      border: 1px solid rgba(255,255,255,.45);
-      color: #fff;
-    }
-    .button.secondary:hover{
-      background: rgba(255,255,255,.10);
-    }
+  @media (max-width: 640px){
+    .linha-unidade{ grid-template-columns: 1fr; }
+  }
 
-    .nav-button{
-      position: fixed;
-      bottom: 12px;
-      left: 12px;
-      background: #fff;
-      color: #000;
-      font-weight: 1000;
-      padding: 10px 14px;
-      border-radius: 12px;
-      text-decoration: none;
-      box-shadow: 2px 2px 10px rgba(0,0,0,0.35);
-    }
+  /* Labels QRU/QTH/CARAC em cima, tudo central */
+  .linha-campo{
+    display: grid;
+    gap: 6px;
+    margin: 10px 0;
+    justify-items: center;
+  }
 
-    /* caixa do grupo (dentro do painel) */
-    .grupo-registro{
-      width: 100%;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.18);
-      border-radius: var(--radius);
-      padding: 14px;
-      margin-top: 14px;
-    }
-  </style>
+  .rotulo{
+    width: 100%;
+    text-align: center;
+    font-weight: 1000;
+    color: #fff;
+    font-size: 14px;
+  }
+
+  .actions{
+    display:flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .button{
+    padding: 10px 14px;
+    background: var(--btnBg);
+    color: var(--btnText);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 1000;
+    font-size: var(--btnFont);
+    text-transform: uppercase;
+  }
+
+  .button.secondary{
+    background: transparent;
+    border: 1px solid rgba(255,255,255,.45);
+    color: #fff;
+  }
+
+  .nav-button{
+    position: fixed;
+    bottom: 12px;
+    left: 12px;
+    background: #fff;
+    color: #000;
+    font-weight: 1000;
+    padding: 10px 14px;
+    border-radius: 12px;
+    text-decoration: none;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.35);
+  }
+
+  .grupo-registro{
+    width: 100%;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: var(--radius);
+    padding: 10px;
+    margin-top: 10px;
+  }
+</style>
 </head>
 
 <body>
