@@ -3,138 +3,280 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Página 2 - Visualização</title>
+  <title>PÁGINA 2 - VISUALIZAÇÃO</title>
 
   <style>
     :root{
       --bg: #000;
       --text: #fff;
-      --card: #d3d3d3;
-      --cardText: #000;
-      --accent: #ff0000;
-      --btnText: #fff;
-      --radius: 12px;
+      --muted: rgba(255,255,255,.75);
+      --card: rgba(255,255,255,.06);
+      --border: rgba(255,255,255,.16);
+      --accent: #ff2b2b;
+
+      /* AJUSTE AQUI PRA MAIS / MENOS TAMANHO NO TELÃO */
+      --font: clamp(16px, 1.3vw, 22px);
+      --fontSmall: clamp(12px, 1vw, 16px);
+
+      /* MAIS COMPACTO NO TELÃO */
+      --maxw: 760px;
+      --pad: 10px;
+      --radius: 14px;
     }
 
     *{ box-sizing: border-box; }
 
     body{
-      margin: 0;
+      margin:0;
       background: var(--bg);
-      font-family: Arial, sans-serif;
       color: var(--text);
-      padding: 20px;
-      font-size: 15px;
+      font-family: Arial, sans-serif;
+      padding: 16px;
+      text-transform: uppercase;
+      letter-spacing: .4px;
     }
 
-    .container{ max-width: 900px; margin: 0 auto; padding-bottom: 90px; }
+    .container{
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding-bottom: 88px;
+      text-align: center;
+    }
 
-    label{ font-weight: 800; display: inline-block; margin-bottom: 6px; }
+    label{
+      font-weight: 900;
+      display: inline-block;
+      margin: 0 0 6px;
+      font-size: var(--fontSmall);
+      color: var(--muted);
+    }
 
     .field{
       width: 100%;
-      border-radius: 10px;
-      border: 1px solid rgba(255,255,255,.25);
-      padding: 10px 10px;
-      font-weight: 800;
+      max-width: 340px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      font-weight: 900;
+      background: rgba(255,255,255,.08);
+      color: var(--text);
       outline: none;
+      font-size: var(--font);
+      text-align: center;
     }
     .field:focus{
-      outline: 3px solid #fff;
+      outline: 3px solid rgba(255,255,255,.9);
       outline-offset: 2px;
     }
-
-    .info{
-      margin-bottom: 12px;
-      padding: 12px;
-      background: var(--card);
-      color: var(--cardText);
-      font-weight: 700;
-      border-radius: var(--radius);
-      word-wrap: break-word;
-      position: relative;
-    }
-
-    .info .topline{
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      margin-bottom: 8px;
-    }
-
-    .meta{
-      display: grid;
-      gap: 6px;
-      margin-top: 6px;
-      white-space: pre-wrap;
-    }
-
-    .muted{ opacity: .85; font-weight: 700; }
 
     .alerta-box{
       width: 100%;
       background: var(--accent);
-      color: var(--btnText);
-      font-weight: 900;
-      font-size: 16px;
-      text-align: center;
-      padding: 10px;
+      color: #fff;
+      font-weight: 1000;
+      font-size: var(--font);
+      padding: 10px 12px;
       display: none;
-      margin-bottom: 10px;
+      margin: 12px 0;
       white-space: pre-wrap;
       border-radius: var(--radius);
-      position: relative;
+      border: 1px solid rgba(255,255,255,.25);
+      text-align: center;
+    }
+
+    .alerta-actions{
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
     }
 
     .smallbtn{
       background: #fff;
-      color: var(--accent);
-      font-weight: 900;
+      color: #000;
+      font-weight: 1000;
       border: none;
-      border-radius: 8px;
-      padding: 6px 10px;
+      border-radius: 12px;
+      padding: 10px 12px;
       cursor: pointer;
+      font-size: var(--fontSmall);
     }
-
+    .smallbtn.danger{ background: #fff; color: var(--accent); }
     .smallbtn:hover{ opacity: .9; }
 
     .alerta-input{
       display: none;
-      margin: 10px auto;
-      background: var(--accent);
+      margin: 10px auto 0;
+      width: 100%;
+      max-width: var(--maxw);
+      background: rgba(255,255,255,.08);
+      border: 1px solid var(--border);
       color: #fff;
       font-weight: 900;
-      font-size: 16px;
-      padding: 10px;
+      font-size: var(--font);
+      padding: 12px;
       border-radius: var(--radius);
-      border: none;
-      width: 100%;
-      white-space: pre-wrap;
       outline: none;
+      white-space: pre-wrap;
+      text-align: center;
     }
 
-    .floating-center{
-      position: fixed;
-      bottom: 12px;
-      left: 50%;
-      transform: translateX(-50%);
+    .info{
+      margin: 10px 0;
+      padding: var(--pad);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      text-align: center;
+    }
+
+    .topline{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .leftmeta{
+      flex: 1;
+      min-width: 220px;
+      text-align: left;
+    }
+
+    .time{
+      font-weight: 1000;
+      font-size: var(--font);
+    }
+
+    .topo{
+      margin-top: 4px;
+      font-weight: 1000;
+      color: var(--muted);
+      font-size: var(--fontSmall);
+    }
+
+    .rightmeta{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .sel{
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 1000;
+      font-size: var(--fontSmall);
+      color: var(--muted);
+    }
+    .sel input{ transform: scale(1.2); }
+
+    /* SETA (SÓ APARECE QUANDO SELECIONA) */
+    .toggle{
+      display: none;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.08);
+      color: #fff;
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-weight: 1000;
+      cursor: pointer;
+      font-size: var(--fontSmall);
+      line-height: 1;
+    }
+    .toggle:hover{ opacity: .9; }
+
+    .meta{
+      margin-top: 10px;
+      display: grid;
+      gap: 10px;
+      text-align: left;
+      font-size: var(--font);
+      font-weight: 900;
+      white-space: pre-wrap;
+    }
+
+    .meta b{ color: #fff; }
+    .meta .line{ padding: 8px 10px; border-radius: 12px; background: rgba(255,255,255,.05); }
+
+    /* EDITOR COMEÇA ESCONDIDO */
+    .edit-panel{
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px dashed rgba(255,255,255,.25);
+      display: none;
+      text-align: center;
+    }
+
+    .grid3{
+      display: grid;
+      grid-template-columns: 90px 1fr 1fr;
+      gap: 10px;
+      align-items: start;
+    }
+    @media (max-width: 640px){
+      .grid3{ grid-template-columns: 1fr; }
+      .leftmeta{ text-align:center; }
+      .topline{ justify-content: center; }
+    }
+
+    .edit-field{
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      background: rgba(255,255,255,.08);
+      color: #fff;
+      font-weight: 1000;
+      outline: none;
+      font-size: var(--fontSmall);
+      text-align: center;
+    }
+
+    textarea.edit-field{
+      text-align: left;
+      min-height: 70px;
+      resize: vertical;
+      font-size: var(--fontSmall);
+      font-weight: 900;
+    }
+
+    .row2{
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 10px;
+      align-items: start;
+      margin-top: 10px;
+    }
+    @media (max-width: 640px){
+      .row2{ grid-template-columns: 1fr; }
+    }
+
+    .actions{
+      margin-top: 12px;
       display: flex;
       gap: 10px;
-      z-index: 5;
+      justify-content: center;
+      flex-wrap: wrap;
     }
 
-    .button{
-      padding: 10px 16px;
-      background: var(--accent);
-      color: var(--btnText);
-      border: none;
+    .btn{
+      padding: 10px 14px;
       border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.08);
+      color: #fff;
+      font-weight: 1000;
       cursor: pointer;
-      font-weight: 900;
-      box-shadow: 2px 2px 10px rgba(0,0,0,0.35);
+      font-size: var(--fontSmall);
     }
+    .btn.primary{ border-color: rgba(255,43,43,.8); }
+    .btn.danger{ color: var(--accent); background: rgba(255,43,43,.08); border-color: rgba(255,43,43,.4); }
+    .btn:hover{ opacity: .9; }
 
     .nav-button{
       position: fixed;
@@ -142,12 +284,11 @@
       left: 12px;
       background: #fff;
       color: #000;
-      font-weight: 900;
+      font-weight: 1000;
       padding: 10px 14px;
       border-radius: 12px;
       text-decoration: none;
-      z-index: 6;
-      box-shadow: 2px 2px 10px rgba(0,0,0,0.35);
+      z-index: 10;
     }
 
     .delete-button{
@@ -156,76 +297,53 @@
       right: 12px;
       background: var(--accent);
       color: #fff;
-      padding: 10px 14px;
       border: none;
+      font-weight: 1000;
+      padding: 10px 14px;
       border-radius: 12px;
-      font-weight: 900;
       cursor: pointer;
-      z-index: 6;
-      box-shadow: 2px 2px 10px rgba(0,0,0,0.35);
+      z-index: 10;
     }
 
-    .tooltip-alerta{
+    .floating-center{
+      position: fixed;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+    }
+
+    .big-button{
+      padding: 10px 14px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-weight: 1000;
+      cursor: pointer;
+    }
+
+    .tooltip{
       display: none;
-      background: #fff;
-      color: var(--accent);
-      font-size: 11px;
-      font-weight: 900;
-      padding: 6px 10px;
-      border-radius: 10px;
-      text-align: center;
       position: fixed;
       bottom: 58px;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 7;
-      box-shadow: 2px 2px 10px rgba(0,0,0,0.35);
+      background: #fff;
+      color: #000;
+      padding: 8px 12px;
+      border-radius: 12px;
+      font-weight: 1000;
+      font-size: var(--fontSmall);
+      z-index: 12;
     }
 
     .assinatura{
       position: fixed;
       bottom: 2px;
       right: 12px;
-      color: #fff;
+      color: rgba(255,255,255,.55);
       font-size: 10px;
-      opacity: .7;
-    }
-
-    .actions{
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: flex-end;
-    }
-
-    .edit-panel{
-      display: grid;
-      gap: 8px;
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 2px dashed rgba(0,0,0,.3);
-    }
-
-    .row3{
-      display: grid;
-      grid-template-columns: 80px 1fr 1fr;
-      gap: 8px;
-    }
-
-    @media (max-width: 560px){
-      .row3{ grid-template-columns: 1fr; }
-    }
-
-    .row2{
-      display: grid;
-      grid-template-columns: 160px 1fr;
-      gap: 10px;
-      align-items: start;
-    }
-
-    @media (max-width: 560px){
-      .row2{ grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -234,29 +352,29 @@
   <main class="container">
     <section class="alerta-box" id="alertaBox" aria-live="polite">
       <div id="alertaTexto"></div>
-      <div class="actions" style="margin-top:10px; justify-content:center;">
+      <div class="alerta-actions">
         <button class="smallbtn" id="btnEditarAlerta" type="button">EDITAR</button>
-        <button class="smallbtn" id="btnRemoverAlerta" type="button">REMOVER</button>
+        <button class="smallbtn danger" id="btnRemoverAlerta" type="button">REMOVER</button>
       </div>
     </section>
 
-    <div style="max-width: 320px;">
-      <label for="dataSelecionada">Data</label>
+    <div style="margin-top:6px;">
+      <label for="dataSelecionada">DATA</label><br>
       <input type="date" id="dataSelecionada" class="field"/>
     </div>
 
-    <textarea id="inputAlerta" class="alerta-input" placeholder="Digite o alerta e pressione Ctrl+Enter para salvar"></textarea>
+    <textarea id="inputAlerta" class="alerta-input" placeholder="DIGITE O ALERTA E PRESSIONE CTRL+ENTER PARA SALVAR"></textarea>
 
     <div id="dados" aria-live="polite" style="margin-top:14px;"></div>
   </main>
 
-  <div class="tooltip-alerta" id="dicaAtalhos">Ctrl+Enter: salvar alerta | Ctrl+X: remover alerta</div>
+  <div class="tooltip" id="dicaAtalhos">CTRL+ENTER: SALVAR ALERTA | CTRL+X: REMOVER ALERTA</div>
 
-  <a href="pagina1.html" class="nav-button">⬅️ Registro</a>
-  <button class="delete-button" type="button" id="btnApagarSelecionados">🗑️ Apagar Selecionados</button>
+  <a href="pagina1.html" class="nav-button">⬅️ REGISTRO</a>
+  <button class="delete-button" type="button" id="btnApagarSelecionados">🗑️ APAGAR</button>
 
   <div class="floating-center">
-    <button class="button" type="button" id="btnMostrarAlerta">+ ALERTA GERAL</button>
+    <button class="big-button" type="button" id="btnMostrarAlerta">+ ALERTA GERAL</button>
   </div>
 
   <div class="assinatura">SD PM 154.466-7 ANDERSON SILVA</div>
@@ -287,9 +405,8 @@
     function getAlertas(){ return safeParseJSON(localStorage.getItem(STORAGE_ALERT_KEY), {}); }
     function setAlertas(obj){ localStorage.setItem(STORAGE_ALERT_KEY, JSON.stringify(obj)); }
 
-    // Compat: transforma registro antigo (campos array) em objeto padrão
+    // COMPAT: SUPORTA FORMATO NOVO E ANTIGO
     function normalizarRegistro(item) {
-      // Novo formato (objeto com chaves)
       if (item && typeof item === 'object' && !Array.isArray(item) && !item.campos) {
         return {
           horario: item.horario || '',
@@ -301,11 +418,8 @@
           caracteristicas: item.caracteristicas || ''
         };
       }
-
-      // Antigo formato: {campos: [...], horario}
       const campos = (item && item.campos) ? item.campos : [];
       const [sigla, unidade, cop, qru, qth, caracteristicas] = campos;
-
       return {
         horario: item?.horario || '',
         prefixo: (sigla || '').toString(),
@@ -318,15 +432,14 @@
     }
 
     function formatarTopo(reg) {
-      const prefixo = (reg.prefixo || '').trim();
-      const unidade = (reg.unidade || '').trim();
-      const status = (reg.status || '').trim();
-
-      const left = [prefixo, unidade].filter(Boolean).join(' ');
-      if (!left && !status) return '';
-      if (!left) return status;
-      if (!status) return left;
-      return `${left} - ${status}`;
+      const p = (reg.prefixo || '').trim();
+      const u = (reg.unidade || '').trim();
+      const s = (reg.status || '').trim();
+      const left = [p, u].filter(Boolean).join(' ');
+      if (!left && !s) return '';
+      if (!left) return s;
+      if (!s) return left;
+      return `${left} - ${s}`;
     }
 
     function escapeHTML(str){
@@ -345,7 +458,6 @@
 
       dadosContainer.innerHTML = '';
 
-      // ALERTA
       const alertaDoDia = alertas[data];
       if (alertaDoDia) {
         alertaTexto.textContent = alertaDoDia;
@@ -359,51 +471,53 @@
       const lista = (registros[data] || []).map(normalizarRegistro);
 
       lista.forEach((reg, index) => {
-        const div = document.createElement('div');
-        div.className = 'info';
-        div.dataset.index = String(index);
-
         const topo = formatarTopo(reg);
 
-        div.innerHTML = `
+        const card = document.createElement('div');
+        card.className = 'info';
+        card.dataset.index = String(index);
+
+        card.innerHTML = `
           <div class="topline">
-            <div>
-              <div><strong>${escapeHTML(reg.horario || '')}</strong></div>
-              ${topo ? `<div class="muted"><strong>${escapeHTML(topo)}</strong></div>` : ''}
+            <div class="leftmeta">
+              <div class="time">${escapeHTML(reg.horario || '')}</div>
+              ${topo ? `<div class="topo">${escapeHTML(topo)}</div>` : ''}
             </div>
 
-            <div class="actions">
-              <label style="display:flex; align-items:center; gap:8px; font-weight:900;">
+            <div class="rightmeta">
+              <label class="sel">
                 <input type="checkbox" data-index="${index}" />
-                Selecionar
+                SELECIONAR
               </label>
-              <button type="button" class="smallbtn" data-action="editar">EDITAR</button>
+              <button type="button" class="toggle" data-action="toggle" aria-label="ABRIR/FECHAR EDIÇÃO">▼</button>
             </div>
           </div>
 
           <div class="meta">
-            ${reg.qru ? `<div><strong>QRU:</strong>\n${escapeHTML(reg.qru)}</div>` : ''}
-            ${reg.qth ? `<div><strong>QTH:</strong>\n${escapeHTML(reg.qth)}</div>` : ''}
-            ${reg.caracteristicas ? `<div><strong>CARACTERÍSTICAS:</strong>\n${escapeHTML(reg.caracteristicas)}</div>` : ''}
+            ${reg.qru ? `<div class="line"><b>QRU:</b>\n${escapeHTML(reg.qru)}</div>` : ''}
+            ${reg.qth ? `<div class="line"><b>QTH:</b>\n${escapeHTML(reg.qth)}</div>` : ''}
+            ${reg.caracteristicas ? `<div class="line"><b>CARACTERÍSTICAS:</b>\n${escapeHTML(reg.caracteristicas)}</div>` : ''}
           </div>
 
-          <div class="edit-panel" hidden>
-            <div class="row3">
+          <div class="edit-panel">
+            <div class="grid3">
               <div>
-                <label>Prefixo</label>
-                <input class="field" name="prefixo" maxlength="3" inputmode="numeric" value="${escapeHTML(reg.prefixo)}">
+                <label>PREFIXO</label>
+                <input class="edit-field" name="prefixo" maxlength="3" inputmode="numeric" value="${escapeHTML(reg.prefixo)}">
               </div>
+
               <div>
-                <label>Unidade</label>
-                <select class="field" name="unidade">
+                <label>UNIDADE</label>
+                <select class="edit-field" name="unidade">
                   ${['º BPM/M','º CPTRAN','º CHOQUE','º BAEP','º RODOVIÁRIA'].map(v =>
                     `<option value="${escapeHTML(v)}" ${v === reg.unidade ? 'selected' : ''}>${escapeHTML(v)}</option>`
                   ).join('')}
                 </select>
               </div>
+
               <div>
-                <label>Status</label>
-                <select class="field" name="status">
+                <label>STATUS</label>
+                <select class="edit-field" name="status">
                   ${[
                     'NIHIL DE COP',
                     'COP SEM IMAGENS',
@@ -419,39 +533,59 @@
 
             <div class="row2">
               <label>QRU</label>
-              <textarea class="field" name="qru" rows="3">${escapeHTML(reg.qru)}</textarea>
+              <textarea class="edit-field" name="qru" rows="3">${escapeHTML(reg.qru)}</textarea>
             </div>
 
             <div class="row2">
               <label>QTH</label>
-              <textarea class="field" name="qth" rows="3">${escapeHTML(reg.qth)}</textarea>
+              <textarea class="edit-field" name="qth" rows="3">${escapeHTML(reg.qth)}</textarea>
             </div>
 
             <div class="row2">
               <label>CARACTERÍSTICAS</label>
-              <textarea class="field" name="caracteristicas" rows="3">${escapeHTML(reg.caracteristicas)}</textarea>
+              <textarea class="edit-field" name="caracteristicas" rows="3">${escapeHTML(reg.caracteristicas)}</textarea>
             </div>
 
             <div class="actions">
-              <button type="button" class="smallbtn" data-action="salvar">SALVAR</button>
-              <button type="button" class="smallbtn" data-action="cancelar">CANCELAR</button>
+              <button type="button" class="btn primary" data-action="salvar">SALVAR</button>
+              <button type="button" class="btn danger" data-action="cancelar">CANCELAR</button>
             </div>
           </div>
         `;
 
-        dadosContainer.appendChild(div);
+        dadosContainer.appendChild(card);
       });
     }
 
-    // Edição inline: delegação de eventos
+    // REGRAS:
+    // - CHECKBOX MARCADO => MOSTRA A SETA
+    // - SETA (▼) => ABRE/FECHA EDITOR
+    // - DESMARCOU => FECHA E ESCONDE SETA
+    dadosContainer.addEventListener('change', (e) => {
+      const cb = e.target.closest('input[type="checkbox"][data-index]');
+      if (!cb) return;
+
+      const card = cb.closest('.info');
+      const toggle = card.querySelector('.toggle');
+      const panel = card.querySelector('.edit-panel');
+
+      if (cb.checked) {
+        toggle.style.display = 'inline-block';
+      } else {
+        toggle.style.display = 'none';
+        toggle.textContent = '▼';
+        panel.style.display = 'none';
+      }
+    });
+
     dadosContainer.addEventListener('click', (e) => {
       const card = e.target.closest('.info');
       if (!card) return;
 
-      const actionBtn = e.target.closest('button[data-action]');
-      if (!actionBtn) return;
+      const btn = e.target.closest('button[data-action]');
+      if (!btn) return;
 
-      const action = actionBtn.dataset.action;
+      const action = btn.dataset.action;
       const index = Number(card.dataset.index);
       const data = inputData.value;
 
@@ -460,11 +594,14 @@
 
       const panel = card.querySelector('.edit-panel');
 
-      if (action === 'editar') {
-        panel.hidden = false;
-        // foca no primeiro campo do painel
-        const first = panel.querySelector('input,select,textarea');
-        if (first) first.focus();
+      if (action === 'toggle') {
+        const isOpen = panel.style.display === 'block';
+        panel.style.display = isOpen ? 'none' : 'block';
+        btn.textContent = isOpen ? '▼' : '▲';
+        if (!isOpen) {
+          const first = panel.querySelector('input,select,textarea');
+          if (first) first.focus();
+        }
         return;
       }
 
@@ -484,9 +621,10 @@
         item.qth = panel.querySelector('[name="qth"]').value.trim();
         item.caracteristicas = panel.querySelector('[name="caracteristicas"]').value.trim();
 
-        // Salva sempre no formato novo (mais robusto)
+        // SALVA SEMPRE NO FORMATO NOVO (MELHOR)
         registros[data] = lista.map(x => ({ ...x }));
         setRegistros(registros);
+
         carregarDados();
       }
     });
@@ -502,7 +640,7 @@
 
       const data = inputData.value;
       if (!data) {
-        alert('Selecione uma data!');
+        alert('SELECIONE UMA DATA!');
         inputData.focus();
         return;
       }
@@ -520,7 +658,6 @@
       const data = inputData.value;
       const alertas = getAlertas();
       if (!data) return;
-
       if (alertas[data]) {
         inputAlerta.value = alertas[data];
         mostrarInputAlerta();
@@ -549,7 +686,7 @@
       carregarDados();
     }
 
-    // Eventos
+    // EVENTOS
     inputData.value = localStorage.getItem(STORAGE_DATA_KEY) || '';
     inputData.addEventListener('change', () => {
       localStorage.setItem(STORAGE_DATA_KEY, inputData.value);
@@ -575,7 +712,6 @@
       }
     });
 
-    // Inicial
     carregarDados();
   </script>
 </body>
