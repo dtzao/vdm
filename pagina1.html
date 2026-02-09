@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Página 1 - Registro</title>
+
+  <style>
+    :root{
+      --bg: #c40000;          /* vermelho forte */
+      --card: rgba(0,0,0,.12);
+      --text: #ffffff;
+      --field-bg: #ffd400;    /* amarelo */
+      --field-text: #111;
+      --btn: #111;
+      --btn-hover: #444;
+      --outline: #ffffff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body{
+      margin: 0;
+      background: var(--bg);
+      font-family: Arial, sans-serif;
+      color: var(--text);
+      padding: 20px;
+      font-size: 15px;
+    }
+
+    .container{
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .topbar{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: end;
+      margin-bottom: 16px;
+    }
+
+    label{
+      font-weight: 700;
+      display: inline-block;
+      margin-bottom: 6px;
+    }
+
+    .field{
+      width: 100%;
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 8px;
+      background: var(--field-bg);
+      color: var(--field-text);
+      font-weight: 700;
+      padding: 10px 10px;
+      min-height: 40px;
+      outline: none;
+    }
+
+    .field:focus{
+      outline: 3px solid var(--outline);
+      outline-offset: 2px;
+    }
+
+    textarea.field{
+      min-height: 70px;
+      resize: vertical;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .grupo-registro{
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 12px;
+      padding: 12px;
+      margin: 14px 0;
+    }
+
+    fieldset{
+      border: 0;
+      padding: 0;
+      margin: 0;
+    }
+
+    legend{
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .linha-unidade{
+      display: grid;
+      grid-template-columns: 70px 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 560px){
+      .linha-unidade{
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .linha-campo{
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 10px;
+      align-items: start;
+      margin: 10px 0;
+    }
+
+    @media (max-width: 560px){
+      .linha-campo{
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .actions{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .button{
+      padding: 10px 16px;
+      background: var(--btn);
+      color: var(--text);
+      border: 0;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 800;
+    }
+    .button:hover{ background: var(--btn-hover); }
+
+    .button.secondary{
+      background: rgba(255,255,255,.16);
+      border: 1px solid rgba(255,255,255,.35);
+    }
+    .button.secondary:hover{
+      background: rgba(255,255,255,.24);
+    }
+
+    .nav-button{
+      position: fixed;
+      bottom: 12px;
+      left: 12px;
+      background: #fff;
+      color: #000;
+      font-weight: 900;
+      padding: 10px 16px;
+      border-radius: 12px;
+      text-decoration: none;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.35);
+    }
+
+    .hint{
+      font-size: 12px;
+      opacity: .9;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <header class="topbar">
+      <div style="min-width: 220px;">
+        <label for="dataSelecionada">Data do registro</label>
+        <input type="date" id="dataSelecionada" class="field" />
+        <div class="hint">A data fica salva automaticamente.</div>
+      </div>
+
+      <div class="actions" style="margin-top: 22px;">
+        <button type="button" class="button" id="adicionarGrupo">+ Adicionar Grupo</button>
+      </div>
+    </header>
+
+    <section id="gruposContainer" aria-live="polite"></section>
+
+    <a href="pagina2.html" class="nav-button" aria-label="Ir para a página de visualização">
+      📄 Ir para Visualização
+    </a>
+  </main>
+
+  <script>
+    const campoData = document.getElementById('dataSelecionada');
+    const gruposContainer = document.getElementById('gruposContainer');
+    const btnAdicionar = document.getElementById('adicionarGrupo');
+
+    const STORAGE_DATA_KEY = 'dataSelecionada';
+    const STORAGE_REG_KEY = 'registrosPorDia';
+
+    function safeParseJSON(value, fallback) {
+      try {
+        return value ? JSON.parse(value) : fallback;
+      } catch {
+        return fallback;
+      }
+    }
+
+    function getRegistros() {
+      return safeParseJSON(localStorage.getItem(STORAGE_REG_KEY), {});
+    }
+
+    function setRegistros(obj) {
+      localStorage.setItem(STORAGE_REG_KEY, JSON.stringify(obj));
+    }
+
+    // Carrega data salva
+    campoData.value = localStorage.getItem(STORAGE_DATA_KEY) || '';
+    campoData.addEventListener('change', () => {
+      localStorage.setItem(STORAGE_DATA_KEY, campoData.value);
+    });
+
+    function criarGrupo() {
+      const form = document.createElement('form');
+      form.className = 'grupo-registro';
+      form.noValidate = true;
+
+      const idGrupo = String(Date.now());
+
+      form.innerHTML = `
+        <fieldset>
+          <legend>Registro</legend>
+
+          <div class="linha-unidade">
+            <div>
+              <label for="prefixo-${idGrupo}">Prefixo</label>
+              <input
+                id="prefixo-${idGrupo}"
+                name="prefixo"
+                type="text"
+                class="field"
+                maxlength="3"
+                inputmode="numeric"
+                placeholder="000"
+                aria-label="Prefixo (até 3 caracteres)"
+              />
+            </div>
+
+            <div>
+              <label for="unidade-${idGrupo}">Unidade</label>
+              <select id="unidade-${idGrupo}" name="unidade" class="field">
+                <option value="º BPM/M">º BPM/M</option>
+                <option value="º CPTRAN">º CPTRAN</option>
+                <option value="º CHOQUE">º CHOQUE</option>
+                <option value="º BAEP">º BAEP</option>
+                <option value="º RODOVIÁRIA">º RODOVIÁRIA</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="status-${idGrupo}">Status</label>
+              <select id="status-${idGrupo}" name="status" class="field">
+                <option value="NIHIL DE COP">NIHIL DE COP</option>
+                <option value="COP SEM IMAGENS">COP SEM IMAGENS</option>
+                <option value="COP LADO ESQUERDO">COP LADO ESQUERDO</option>
+                <option value="COP LADO DIREITO">COP LADO DIREITO</option>
+                <option value="COP EM AMBOS OS LADOS">COP EM AMBOS OS LADOS</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="linha-campo">
+            <label for="qru-${idGrupo}">QRU:</label>
+            <textarea id="qru-${idGrupo}" name="qru" class="field" placeholder="Ex.: VTR em patrulhamento..."></textarea>
+          </div>
+
+          <div class="linha-campo">
+            <label for="qth-${idGrupo}">QTH:</label>
+            <textarea id="qth-${idGrupo}" name="qth" class="field" placeholder="Ex.: Av. X, nº Y..."></textarea>
+          </div>
+
+          <div class="linha-campo">
+            <label for="caract-${idGrupo}">CARACTERÍSTICAS:</label>
+            <textarea id="caract-${idGrupo}" name="caracteristicas" class="field" placeholder="Ex.: masculino, camiseta preta..."></textarea>
+          </div>
+
+          <div class="actions">
+            <button type="submit" class="button">Registrar</button>
+            <button type="button" class="button secondary" data-action="remover">Remover Grupo</button>
+          </div>
+        </fieldset>
+      `;
+
+      // Remover grupo (UX)
+      form.addEventListener('click', (e) => {
+        const btn = e.target.closest('button[data-action="remover"]');
+        if (!btn) return;
+        form.remove();
+      });
+
+      // Submit do registro
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const data = campoData.value;
+        if (!data) {
+          alert('Selecione uma data!');
+          campoData.focus();
+          return;
+        }
+
+        const fd = new FormData(form);
+        const registro = {
+          horario: new Date().toLocaleTimeString('pt-BR'),
+          prefixo: (fd.get('prefixo') || '').toString().trim(),
+          unidade: (fd.get('unidade') || '').toString(),
+          status: (fd.get('status') || '').toString(),
+          qru: (fd.get('qru') || '').toString().trim(),
+          qth: (fd.get('qth') || '').toString().trim(),
+          caracteristicas: (fd.get('caracteristicas') || '').toString().trim(),
+        };
+
+        const registros = getRegistros();
+        registros[data] = [registro, ...(registros[data] || [])];
+        setRegistros(registros);
+
+        // Limpa campos do grupo
+        form.reset();
+
+        // Mantém selects no primeiro item (opcional)
+        // Se quiser manter o último status/unidade selecionado, eu ajusto.
+      });
+
+      return form;
+    }
+
+    btnAdicionar.addEventListener('click', () => {
+      gruposContainer.appendChild(criarGrupo());
+    });
+  </script>
+</body>
+</html>

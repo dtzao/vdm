@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Página 2 - Visualização</title>
+
+  <style>
+    :root{
+      --bg: #000;
+      --text: #fff;
+      --card: #d3d3d3;
+      --cardText: #000;
+      --accent: #ff0000;
+      --btnText: #fff;
+      --radius: 12px;
+    }
+
+    *{ box-sizing: border-box; }
+
+    body{
+      margin: 0;
+      background: var(--bg);
+      font-family: Arial, sans-serif;
+      color: var(--text);
+      padding: 20px;
+      font-size: 15px;
+    }
+
+    .container{ max-width: 900px; margin: 0 auto; padding-bottom: 90px; }
+
+    label{ font-weight: 800; display: inline-block; margin-bottom: 6px; }
+
+    .field{
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,.25);
+      padding: 10px 10px;
+      font-weight: 800;
+      outline: none;
+    }
+    .field:focus{
+      outline: 3px solid #fff;
+      outline-offset: 2px;
+    }
+
+    .info{
+      margin-bottom: 12px;
+      padding: 12px;
+      background: var(--card);
+      color: var(--cardText);
+      font-weight: 700;
+      border-radius: var(--radius);
+      word-wrap: break-word;
+      position: relative;
+    }
+
+    .info .topline{
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+    .meta{
+      display: grid;
+      gap: 6px;
+      margin-top: 6px;
+      white-space: pre-wrap;
+    }
+
+    .muted{ opacity: .85; font-weight: 700; }
+
+    .alerta-box{
+      width: 100%;
+      background: var(--accent);
+      color: var(--btnText);
+      font-weight: 900;
+      font-size: 16px;
+      text-align: center;
+      padding: 10px;
+      display: none;
+      margin-bottom: 10px;
+      white-space: pre-wrap;
+      border-radius: var(--radius);
+      position: relative;
+    }
+
+    .smallbtn{
+      background: #fff;
+      color: var(--accent);
+      font-weight: 900;
+      border: none;
+      border-radius: 8px;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+
+    .smallbtn:hover{ opacity: .9; }
+
+    .alerta-input{
+      display: none;
+      margin: 10px auto;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 900;
+      font-size: 16px;
+      padding: 10px;
+      border-radius: var(--radius);
+      border: none;
+      width: 100%;
+      white-space: pre-wrap;
+      outline: none;
+    }
+
+    .floating-center{
+      position: fixed;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 5;
+    }
+
+    .button{
+      padding: 10px 16px;
+      background: var(--accent);
+      color: var(--btnText);
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 900;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.35);
+    }
+
+    .nav-button{
+      position: fixed;
+      bottom: 12px;
+      left: 12px;
+      background: #fff;
+      color: #000;
+      font-weight: 900;
+      padding: 10px 14px;
+      border-radius: 12px;
+      text-decoration: none;
+      z-index: 6;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.35);
+    }
+
+    .delete-button{
+      position: fixed;
+      bottom: 12px;
+      right: 12px;
+      background: var(--accent);
+      color: #fff;
+      padding: 10px 14px;
+      border: none;
+      border-radius: 12px;
+      font-weight: 900;
+      cursor: pointer;
+      z-index: 6;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.35);
+    }
+
+    .tooltip-alerta{
+      display: none;
+      background: #fff;
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 900;
+      padding: 6px 10px;
+      border-radius: 10px;
+      text-align: center;
+      position: fixed;
+      bottom: 58px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 7;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.35);
+    }
+
+    .assinatura{
+      position: fixed;
+      bottom: 2px;
+      right: 12px;
+      color: #fff;
+      font-size: 10px;
+      opacity: .7;
+    }
+
+    .actions{
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .edit-panel{
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 2px dashed rgba(0,0,0,.3);
+    }
+
+    .row3{
+      display: grid;
+      grid-template-columns: 80px 1fr 1fr;
+      gap: 8px;
+    }
+
+    @media (max-width: 560px){
+      .row3{ grid-template-columns: 1fr; }
+    }
+
+    .row2{
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 10px;
+      align-items: start;
+    }
+
+    @media (max-width: 560px){
+      .row2{ grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <section class="alerta-box" id="alertaBox" aria-live="polite">
+      <div id="alertaTexto"></div>
+      <div class="actions" style="margin-top:10px; justify-content:center;">
+        <button class="smallbtn" id="btnEditarAlerta" type="button">EDITAR</button>
+        <button class="smallbtn" id="btnRemoverAlerta" type="button">REMOVER</button>
+      </div>
+    </section>
+
+    <div style="max-width: 320px;">
+      <label for="dataSelecionada">Data</label>
+      <input type="date" id="dataSelecionada" class="field"/>
+    </div>
+
+    <textarea id="inputAlerta" class="alerta-input" placeholder="Digite o alerta e pressione Ctrl+Enter para salvar"></textarea>
+
+    <div id="dados" aria-live="polite" style="margin-top:14px;"></div>
+  </main>
+
+  <div class="tooltip-alerta" id="dicaAtalhos">Ctrl+Enter: salvar alerta | Ctrl+X: remover alerta</div>
+
+  <a href="pagina1.html" class="nav-button">⬅️ Registro</a>
+  <button class="delete-button" type="button" id="btnApagarSelecionados">🗑️ Apagar Selecionados</button>
+
+  <div class="floating-center">
+    <button class="button" type="button" id="btnMostrarAlerta">+ ALERTA GERAL</button>
+  </div>
+
+  <div class="assinatura">SD PM 154.466-7 ANDERSON SILVA</div>
+
+  <script>
+    const inputData = document.getElementById('dataSelecionada');
+    const dadosContainer = document.getElementById('dados');
+
+    const alertaBox = document.getElementById('alertaBox');
+    const alertaTexto = document.getElementById('alertaTexto');
+    const inputAlerta = document.getElementById('inputAlerta');
+    const dicaAtalhos = document.getElementById('dicaAtalhos');
+
+    const btnMostrarAlerta = document.getElementById('btnMostrarAlerta');
+    const btnEditarAlerta = document.getElementById('btnEditarAlerta');
+    const btnRemoverAlerta = document.getElementById('btnRemoverAlerta');
+    const btnApagarSelecionados = document.getElementById('btnApagarSelecionados');
+
+    const STORAGE_DATA_KEY = 'dataSelecionada';
+    const STORAGE_REG_KEY = 'registrosPorDia';
+    const STORAGE_ALERT_KEY = 'alertasPorDia';
+
+    function safeParseJSON(value, fallback) {
+      try { return value ? JSON.parse(value) : fallback; } catch { return fallback; }
+    }
+    function getRegistros(){ return safeParseJSON(localStorage.getItem(STORAGE_REG_KEY), {}); }
+    function setRegistros(obj){ localStorage.setItem(STORAGE_REG_KEY, JSON.stringify(obj)); }
+    function getAlertas(){ return safeParseJSON(localStorage.getItem(STORAGE_ALERT_KEY), {}); }
+    function setAlertas(obj){ localStorage.setItem(STORAGE_ALERT_KEY, JSON.stringify(obj)); }
+
+    // Compat: transforma registro antigo (campos array) em objeto padrão
+    function normalizarRegistro(item) {
+      // Novo formato (objeto com chaves)
+      if (item && typeof item === 'object' && !Array.isArray(item) && !item.campos) {
+        return {
+          horario: item.horario || '',
+          prefixo: item.prefixo || '',
+          unidade: item.unidade || '',
+          status: item.status || '',
+          qru: item.qru || '',
+          qth: item.qth || '',
+          caracteristicas: item.caracteristicas || ''
+        };
+      }
+
+      // Antigo formato: {campos: [...], horario}
+      const campos = (item && item.campos) ? item.campos : [];
+      const [sigla, unidade, cop, qru, qth, caracteristicas] = campos;
+
+      return {
+        horario: item?.horario || '',
+        prefixo: (sigla || '').toString(),
+        unidade: (unidade || '').toString(),
+        status: (cop || '').toString(),
+        qru: (qru || '').toString(),
+        qth: (qth || '').toString(),
+        caracteristicas: (caracteristicas || '').toString()
+      };
+    }
+
+    function formatarTopo(reg) {
+      const prefixo = (reg.prefixo || '').trim();
+      const unidade = (reg.unidade || '').trim();
+      const status = (reg.status || '').trim();
+
+      const left = [prefixo, unidade].filter(Boolean).join(' ');
+      if (!left && !status) return '';
+      if (!left) return status;
+      if (!status) return left;
+      return `${left} - ${status}`;
+    }
+
+    function escapeHTML(str){
+      return String(str)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    function carregarDados() {
+      const data = inputData.value;
+      const registros = getRegistros();
+      const alertas = getAlertas();
+
+      dadosContainer.innerHTML = '';
+
+      // ALERTA
+      const alertaDoDia = alertas[data];
+      if (alertaDoDia) {
+        alertaTexto.textContent = alertaDoDia;
+        alertaBox.style.display = 'block';
+        dicaAtalhos.style.display = 'block';
+      } else {
+        alertaBox.style.display = 'none';
+        dicaAtalhos.style.display = 'none';
+      }
+
+      const lista = (registros[data] || []).map(normalizarRegistro);
+
+      lista.forEach((reg, index) => {
+        const div = document.createElement('div');
+        div.className = 'info';
+        div.dataset.index = String(index);
+
+        const topo = formatarTopo(reg);
+
+        div.innerHTML = `
+          <div class="topline">
+            <div>
+              <div><strong>${escapeHTML(reg.horario || '')}</strong></div>
+              ${topo ? `<div class="muted"><strong>${escapeHTML(topo)}</strong></div>` : ''}
+            </div>
+
+            <div class="actions">
+              <label style="display:flex; align-items:center; gap:8px; font-weight:900;">
+                <input type="checkbox" data-index="${index}" />
+                Selecionar
+              </label>
+              <button type="button" class="smallbtn" data-action="editar">EDITAR</button>
+            </div>
+          </div>
+
+          <div class="meta">
+            ${reg.qru ? `<div><strong>QRU:</strong>\n${escapeHTML(reg.qru)}</div>` : ''}
+            ${reg.qth ? `<div><strong>QTH:</strong>\n${escapeHTML(reg.qth)}</div>` : ''}
+            ${reg.caracteristicas ? `<div><strong>CARACTERÍSTICAS:</strong>\n${escapeHTML(reg.caracteristicas)}</div>` : ''}
+          </div>
+
+          <div class="edit-panel" hidden>
+            <div class="row3">
+              <div>
+                <label>Prefixo</label>
+                <input class="field" name="prefixo" maxlength="3" inputmode="numeric" value="${escapeHTML(reg.prefixo)}">
+              </div>
+              <div>
+                <label>Unidade</label>
+                <select class="field" name="unidade">
+                  ${['º BPM/M','º CPTRAN','º CHOQUE','º BAEP','º RODOVIÁRIA'].map(v =>
+                    `<option value="${escapeHTML(v)}" ${v === reg.unidade ? 'selected' : ''}>${escapeHTML(v)}</option>`
+                  ).join('')}
+                </select>
+              </div>
+              <div>
+                <label>Status</label>
+                <select class="field" name="status">
+                  ${[
+                    'NIHIL DE COP',
+                    'COP SEM IMAGENS',
+                    'COP LADO ESQUERDO',
+                    'COP LADO DIREITO',
+                    'COP EM AMBOS OS LADOS'
+                  ].map(v =>
+                    `<option value="${escapeHTML(v)}" ${v === reg.status ? 'selected' : ''}>${escapeHTML(v)}</option>`
+                  ).join('')}
+                </select>
+              </div>
+            </div>
+
+            <div class="row2">
+              <label>QRU</label>
+              <textarea class="field" name="qru" rows="3">${escapeHTML(reg.qru)}</textarea>
+            </div>
+
+            <div class="row2">
+              <label>QTH</label>
+              <textarea class="field" name="qth" rows="3">${escapeHTML(reg.qth)}</textarea>
+            </div>
+
+            <div class="row2">
+              <label>CARACTERÍSTICAS</label>
+              <textarea class="field" name="caracteristicas" rows="3">${escapeHTML(reg.caracteristicas)}</textarea>
+            </div>
+
+            <div class="actions">
+              <button type="button" class="smallbtn" data-action="salvar">SALVAR</button>
+              <button type="button" class="smallbtn" data-action="cancelar">CANCELAR</button>
+            </div>
+          </div>
+        `;
+
+        dadosContainer.appendChild(div);
+      });
+    }
+
+    // Edição inline: delegação de eventos
+    dadosContainer.addEventListener('click', (e) => {
+      const card = e.target.closest('.info');
+      if (!card) return;
+
+      const actionBtn = e.target.closest('button[data-action]');
+      if (!actionBtn) return;
+
+      const action = actionBtn.dataset.action;
+      const index = Number(card.dataset.index);
+      const data = inputData.value;
+
+      const registros = getRegistros();
+      const lista = (registros[data] || []).map(normalizarRegistro);
+
+      const panel = card.querySelector('.edit-panel');
+
+      if (action === 'editar') {
+        panel.hidden = false;
+        // foca no primeiro campo do painel
+        const first = panel.querySelector('input,select,textarea');
+        if (first) first.focus();
+        return;
+      }
+
+      if (action === 'cancelar') {
+        carregarDados();
+        return;
+      }
+
+      if (action === 'salvar') {
+        const item = lista[index];
+        if (!item) return;
+
+        item.prefixo = panel.querySelector('[name="prefixo"]').value.trim();
+        item.unidade = panel.querySelector('[name="unidade"]').value;
+        item.status = panel.querySelector('[name="status"]').value;
+        item.qru = panel.querySelector('[name="qru"]').value.trim();
+        item.qth = panel.querySelector('[name="qth"]').value.trim();
+        item.caracteristicas = panel.querySelector('[name="caracteristicas"]').value.trim();
+
+        // Salva sempre no formato novo (mais robusto)
+        registros[data] = lista.map(x => ({ ...x }));
+        setRegistros(registros);
+        carregarDados();
+      }
+    });
+
+    function mostrarInputAlerta() {
+      inputAlerta.style.display = 'block';
+      inputAlerta.focus();
+    }
+
+    function salvarAlerta() {
+      const texto = inputAlerta.value.trim();
+      if (!texto) return;
+
+      const data = inputData.value;
+      if (!data) {
+        alert('Selecione uma data!');
+        inputData.focus();
+        return;
+      }
+
+      const alertas = getAlertas();
+      alertas[data] = texto;
+      setAlertas(alertas);
+
+      inputAlerta.value = '';
+      inputAlerta.style.display = 'none';
+      carregarDados();
+    }
+
+    function editarAlerta() {
+      const data = inputData.value;
+      const alertas = getAlertas();
+      if (!data) return;
+
+      if (alertas[data]) {
+        inputAlerta.value = alertas[data];
+        mostrarInputAlerta();
+      }
+    }
+
+    function removerAlerta() {
+      const data = inputData.value;
+      const alertas = getAlertas();
+      if (!data) return;
+      delete alertas[data];
+      setAlertas(alertas);
+      carregarDados();
+    }
+
+    function excluirSelecionados() {
+      const data = inputData.value;
+      const registros = getRegistros();
+      const lista = (registros[data] || []).map(normalizarRegistro);
+
+      const checkboxes = document.querySelectorAll('input[type="checkbox"][data-index]:checked');
+      const indices = new Set(Array.from(checkboxes).map(cb => Number(cb.dataset.index)));
+
+      registros[data] = lista.filter((_, i) => !indices.has(i)).map(x => ({...x}));
+      setRegistros(registros);
+      carregarDados();
+    }
+
+    // Eventos
+    inputData.value = localStorage.getItem(STORAGE_DATA_KEY) || '';
+    inputData.addEventListener('change', () => {
+      localStorage.setItem(STORAGE_DATA_KEY, inputData.value);
+      carregarDados();
+    });
+
+    btnMostrarAlerta.addEventListener('click', mostrarInputAlerta);
+    btnEditarAlerta.addEventListener('click', editarAlerta);
+    btnRemoverAlerta.addEventListener('click', removerAlerta);
+    btnApagarSelecionados.addEventListener('click', excluirSelecionados);
+
+    inputAlerta.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && e.ctrlKey) {
+        e.preventDefault();
+        salvarAlerta();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.ctrlKey && e.key.toLowerCase() === 'x') {
+        e.preventDefault();
+        removerAlerta();
+      }
+    });
+
+    // Inicial
+    carregarDados();
+  </script>
+</body>
+</html>
