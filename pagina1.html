@@ -195,12 +195,17 @@
   #gruposContainer .grupo-registro:nth-child(even){
     background: #cfcfcf; /* cinza */
   }
-    /* TEXTO PRETO APENAS NOS GRUPOS CINZA */
-#gruposContainer .grupo-registro:nth-child(even),
-#gruposContainer .grupo-registro:nth-child(even) *{
+   /* GRUPO CINZA: só rótulos/títulos pretos */
+#gruposContainer .grupo-registro:nth-child(even) label,
+#gruposContainer .grupo-registro:nth-child(even) .rotulo,
+#gruposContainer .grupo-registro:nth-child(even) legend{
   color: #000 !important;
 }
 
+/* GRUPO CINZA: o que você digita continua branco */
+#gruposContainer .grupo-registro:nth-child(even) .field{
+  color: #fff !important;
+}
   /* ===== LOGOS LATERAIS ===== */
   .lateral{
     position: fixed;
@@ -316,6 +321,15 @@
     color: rgba(255,255,255,.7);
     text-align: center;
   }
+    /* SPELLCHECK: durante a digitação (FOCO) fica normal p/ corrigir,
+   ao sair do campo volta a MAIÚSCULO só visualmente */
+.field:focus{
+  text-transform: none !important;
+}
+
+.field:not(:focus){
+  text-transform: uppercase;
+}
   </style>
 </head>
 
