@@ -13,16 +13,13 @@
     --muted: rgba(255,255,255,.72);
     --border: rgba(255,255,255,.20);
 
-    /* MAIS ESTREITO (SOBRA LATERAL NO TELÃO) */
     --maxw: 620px;
 
-    /* MAIS COMPACTO */
     --radius: 14px;
     --pad: 10px;
 
-    /* FONTES */
-    --label: 12px;                  /* rótulos menores */
-    --inputFont: clamp(22px, 2.2vw, 34px);  /* <<< TEXTO DIGITADO GRANDE */
+    --label: 12px;
+    --inputFont: clamp(22px, 2.2vw, 34px);
     --btnFont: 14px;
 
     --btnBg: #fff;
@@ -84,7 +81,6 @@
     margin-top: 4px;
   }
 
-  /* CAMPOS: PRETO/BRANCO + TEXTO DIGITADO GRANDE */
   .field{
     width: 100%;
     border-radius: 12px;
@@ -96,7 +92,7 @@
     min-height: 44px;
     outline: none;
     text-align: center;
-    font-size: var(--inputFont);   /* <<< AQUI AUMENTA MUITO */
+    font-size: var(--inputFont);
     line-height: 1.15;
   }
 
@@ -106,7 +102,7 @@
   }
 
   textarea.field{
-    min-height: 62px;              /* menor pra ocupar menos */
+    min-height: 62px;
     resize: vertical;
     text-align: center;
   }
@@ -121,7 +117,6 @@
     font-size: 16px;
   }
 
-  /* 3 campos de cima mais compactos */
   .linha-unidade{
     display: grid;
     grid-template-columns: 90px 1fr 1fr;
@@ -133,7 +128,6 @@
     .linha-unidade{ grid-template-columns: 1fr; }
   }
 
-  /* Labels QRU/QTH/CARAC em cima, tudo central */
   .linha-campo{
     display: grid;
     gap: 6px;
@@ -186,234 +180,162 @@
     border-radius: 12px;
     text-decoration: none;
     box-shadow: 2px 2px 10px rgba(0,0,0,0.35);
+    z-index: 50;
   }
 
+  /* ===== GRUPO: alternância PRETO / CINZA ESCURO ===== */
   .grupo-registro{
     width: 100%;
-    background: rgba(255,255,255,.06);
     border: 1px solid rgba(255,255,255,.18);
     border-radius: var(--radius);
     padding: 10px;
     margin-top: 10px;
+    background: #000; /* padrão */
   }
-    /* ===== LOGOS LATERAIS ===== */
-.lateral{
-  position: fixed;
-  top: 120px;
-  bottom: 120px;
-  width: 160px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  z-index: 2;
-}
-
-.lateral img{
-  width: 140px;
-  height: auto;
-  opacity: 0.9;
-  filter: drop-shadow(0 8px 20px rgba(0,0,0,.6));
-}
-
-.lateral.esquerda{ left: 16px; }
-.lateral.direita{ right: 16px; }
-
-/* EVITA TEXTO EMBAIXO DO LOGO */
-.container{
-  padding-left: 0px;
-  padding-right: 0px;
-}
-
-/* NO CELULAR, SOME */
-@media (max-width: 900px){
-  .lateral{ display: none; }
-  .container{
-    padding-left: 0;
-    padding-right: 0;
+  #gruposContainer .grupo-registro:nth-child(even){
+    background: #1a1a1a; /* cinza escuro */
   }
-}  /* <-- FECHA O @media AQUI */
 
-/* ===== ASSINATURA FIXA NO RODAPÉ (ESTÁTICA DESDE O LOAD) ===== */
-.assinatura{
-  position: fixed;
-  bottom: 6px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  text-align: center;
+  /* ===== LOGOS LATERAIS ===== */
+  .lateral{
+    position: fixed;
+    top: 120px;
+    bottom: 120px;
+    width: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .lateral img{
+    width: 140px;
+    height: auto;
+    opacity: 0.9;
+    filter: drop-shadow(0 8px 20px rgba(0,0,0,.6));
+  }
+  .lateral.esquerda{ left: 16px; }
+  .lateral.direita{ right: 16px; }
 
-  font-size: 11px;
-  font-weight: 700;
-  color: rgba(255,255,255,.6);
-  letter-spacing: 0.6px;
+  @media (max-width: 900px){
+    .lateral{ display: none; }
+  }
 
-  z-index: 999;
-  pointer-events: none;
-  white-space: nowrap;
-}
-    /* ===== MODO TELÃO (ESCALAS) ===== */
-body.telao { zoom: 0.92; }
-body.telao-grande { zoom: 0.98; }
-body.telao-pequeno { zoom: 0.86; }
+  /* ===== ASSINATURA FIXA ===== */
+  .assinatura{
+    position: fixed;
+    bottom: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(255,255,255,.6);
+    letter-spacing: 0.6px;
+    z-index: 999;
+    pointer-events: none;
+    white-space: nowrap;
+  }
 
-/* fallback se zoom não existir */
-@supports not (zoom: 1) {
-  body.telao { transform: scale(0.92); transform-origin: top center; }
-  body.telao-grande { transform: scale(0.98); transform-origin: top center; }
-  body.telao-pequeno { transform: scale(0.86); transform-origin: top center; }
-}
+  /* ===== MODO TELÃO (ESCALAS) ===== */
+  body.telao { zoom: 0.92; }
+  body.telao-grande { zoom: 0.98; }
+  body.telao-pequeno { zoom: 0.86; }
 
-/* ===== CONTROLE (BOTÃO) ===== */
-.telao-ui{
-  position: fixed;
-  top: 12px;
-  right: 12px;
-  z-index: 2000;
-  font-family: Arial, sans-serif;
-  text-transform: uppercase;
-  letter-spacing: .35px;
-}
+  @supports not (zoom: 1) {
+    body.telao { transform: scale(0.92); transform-origin: top center; }
+    body.telao-grande { transform: scale(0.98); transform-origin: top center; }
+    body.telao-pequeno { transform: scale(0.86); transform-origin: top center; }
+  }
 
-.telao-ui .btn{
-  background: rgba(0,0,0,.85);
-  color: #fff;
-  border: 1px solid rgba(255,255,255,.22);
-  border-radius: 12px;
-  padding: 10px 12px;
-  font-weight: 1000;
-  cursor: pointer;
-}
+  /* ===== CONTROLE (BOTÃO) ===== */
+  .telao-ui{
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    z-index: 2000;
+    font-family: Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: .35px;
+  }
 
-.telao-ui .panel{
-  margin-top: 8px;
-  background: rgba(0,0,0,.88);
-  border: 1px solid rgba(255,255,255,.22);
-  border-radius: 14px;
-  padding: 10px;
-  display: none;
-  min-width: 220px;
-}
+  .telao-ui .btn{
+    background: rgba(0,0,0,.85);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,.22);
+    border-radius: 12px;
+    padding: 10px 12px;
+    font-weight: 1000;
+    cursor: pointer;
+  }
 
-.telao-ui.open .panel{ display: block; }
+  .telao-ui .panel{
+    margin-top: 8px;
+    background: rgba(0,0,0,.88);
+    border: 1px solid rgba(255,255,255,.22);
+    border-radius: 14px;
+    padding: 10px;
+    display: none;
+    min-width: 220px;
+  }
 
-.telao-ui .row{
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
+  .telao-ui.open .panel{ display: block; }
 
-.telao-ui .opt{
-  background: rgba(255,255,255,.08);
-  color: #fff;
-  border: 1px solid rgba(255,255,255,.18);
-  border-radius: 12px;
-  padding: 8px 10px;
-  font-weight: 1000;
-  cursor: pointer;
-  font-size: 12px;
-}
+  .telao-ui .row{
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 
-.telao-ui .opt.active{
-  border-color: rgba(255,255,255,.7);
-  background: rgba(255,255,255,.16);
-}
+  .telao-ui .opt{
+    background: rgba(255,255,255,.08);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: 12px;
+    padding: 8px 10px;
+    font-weight: 1000;
+    cursor: pointer;
+    font-size: 12px;
+  }
 
-.telao-ui .hint{
-  margin-top: 8px;
-  font-size: 11px;
-  color: rgba(255,255,255,.7);
-  text-align: center;
-}
-    /* ===== MODO TELÃO (ESCALAS) ===== */
-body.telao { zoom: 0.92; }
-body.telao-grande { zoom: 0.98; }
-body.telao-pequeno { zoom: 0.86; }
+  .telao-ui .opt.active{
+    border-color: rgba(255,255,255,.7);
+    background: rgba(255,255,255,.16);
+  }
 
-/* fallback se zoom não existir */
-@supports not (zoom: 1) {
-  body.telao { transform: scale(0.92); transform-origin: top center; }
-  body.telao-grande { transform: scale(0.98); transform-origin: top center; }
-  body.telao-pequeno { transform: scale(0.86); transform-origin: top center; }
-}
-
-/* ===== CONTROLE (BOTÃO) ===== */
-.telao-ui{
-  position: fixed;
-  top: 12px;
-  right: 12px;
-  z-index: 2000;
-  font-family: Arial, sans-serif;
-  text-transform: uppercase;
-  letter-spacing: .35px;
-}
-
-.telao-ui .btn{
-  background: rgba(0,0,0,.85);
-  color: #fff;
-  border: 1px solid rgba(255,255,255,.22);
-  border-radius: 12px;
-  padding: 10px 12px;
-  font-weight: 1000;
-  cursor: pointer;
-}
-
-.telao-ui .panel{
-  margin-top: 8px;
-  background: rgba(0,0,0,.88);
-  border: 1px solid rgba(255,255,255,.22);
-  border-radius: 14px;
-  padding: 10px;
-  display: none;
-  min-width: 220px;
-}
-
-.telao-ui.open .panel{ display: block; }
-
-.telao-ui .row{
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.telao-ui .opt{
-  background: rgba(255,255,255,.08);
-  color: #fff;
-  border: 1px solid rgba(255,255,255,.18);
-  border-radius: 12px;
-  padding: 8px 10px;
-  font-weight: 1000;
-  cursor: pointer;
-  font-size: 12px;
-}
-
-.telao-ui .opt.active{
-  border-color: rgba(255,255,255,.7);
-  background: rgba(255,255,255,.16);
-}
-
-.telao-ui .hint{
-  margin-top: 8px;
-  font-size: 11px;
-  color: rgba(255,255,255,.7);
-  text-align: center;
-}
-
-
-</style>
+  .telao-ui .hint{
+    margin-top: 8px;
+    font-size: 11px;
+    color: rgba(255,255,255,.7);
+    text-align: center;
+  }
+  </style>
 </head>
 
 <body>
   <!-- LOGOS LATERAIS - PAGINA 1 -->
-<div class="lateral esquerda">
-  <img src="imgb1.png" alt="Logo B Página 1">
-</div>
+  <div class="lateral esquerda">
+    <img src="imgb1.png" alt="Logo B Página 1">
+  </div>
+  <div class="lateral direita">
+    <img src="imgb1.png" alt="Logo B Página 1">
+  </div>
 
-<div class="lateral direita">
-  <img src="imgb1.png" alt="Logo B Página 1">
-</div>
+  <!-- CONTROLE MODO TELÃO -->
+  <div class="telao-ui" id="telaoUI">
+    <button class="btn" type="button" id="telaoBtn">MODO TELÃO</button>
+    <div class="panel">
+      <div class="row" style="margin-bottom:8px;">
+        <button class="opt" type="button" data-mode="off">OFF</button>
+        <button class="opt" type="button" data-mode="telao">TELÃO</button>
+        <button class="opt" type="button" data-mode="telao-grande">TELÃO-GRANDE</button>
+        <button class="opt" type="button" data-mode="telao-pequeno">TELÃO-PEQUENO</button>
+      </div>
+      <div class="hint">FICA SALVO AUTOMATICAMENTE</div>
+    </div>
+  </div>
 
   <main class="container">
     <!-- TOPO -->
@@ -436,9 +358,11 @@ body.telao-pequeno { zoom: 0.86; }
       📄 VISUALIZAÇÃO
     </a>
   </main>
-<footer class="assinatura">
-  SISTEMA DE APOIO DESENVOLVIDO: SD PM 154.466-7 ANDERSON SILVA
-</footer>
+
+  <footer class="assinatura">
+    SISTEMA DE APOIO DESENVOLVIDO: SD PM 154.466-7 ANDERSON SILVA
+  </footer>
+
   <script>
     const campoData = document.getElementById('dataSelecionada');
     const gruposContainer = document.getElementById('gruposContainer');
@@ -491,11 +415,9 @@ body.telao-pequeno { zoom: 0.86; }
             <div>
               <label for="status-${idGrupo}">STATUS</label>
               <select id="status-${idGrupo}" name="status" class="field">
-                <option value="NIHIL DE COP">NIHIL DE COP</option>
-                <option value="COP SEM IMAGENS">COP SEM IMAGENS</option>
-                <option value="COP LADO ESQUERDO">COP LADO ESQUERDO</option>
-                <option value="COP LADO DIREITO">COP LADO DIREITO</option>
-                <option value="COP EM AMBOS OS LADOS">COP EM AMBOS OS LADOS</option>
+                <option value="➡️">➡️</option>
+                <option value="⬅️">⬅️</option>
+                <option value="⬅️➡️">⬅️➡️</option>
               </select>
             </div>
           </div>
@@ -543,7 +465,7 @@ body.telao-pequeno { zoom: 0.86; }
           status: (fd.get('status') || '').toString(),
           qru: (fd.get('qru') || '').toString().trim(),
           qth: (fd.get('qth') || '').toString().trim(),
-       };
+        };
 
         const registros = getRegistros();
         registros[data] = [registro, ...(registros[data] || [])];
@@ -558,126 +480,46 @@ body.telao-pequeno { zoom: 0.86; }
     btnAdicionar.addEventListener('click', () => {
       gruposContainer.appendChild(criarGrupo());
     });
-    <!-- ===== CONTROLE MODO TELÃO (ON/OFF + 3 OPÇÕES) ===== -->
-<div class="telao-ui" id="telaoUI">
-  <button class="btn" type="button" id="telaoBtn">MODO TELÃO</button>
 
-  <div class="panel">
-    <div class="row" style="margin-bottom:8px;">
-      <button class="opt" type="button" data-mode="off">OFF</button>
-      <button class="opt" type="button" data-mode="telao">TELÃO</button>
-      <button class="opt" type="button" data-mode="telao-grande">TELÃO-GRANDE</button>
-      <button class="opt" type="button" data-mode="telao-pequeno">TELÃO-PEQUENO</button>
-    </div>
-    <div class="hint">FICA SALVO AUTOMATICAMENTE</div>
-  </div>
-</div>
+    /* ===== CONTROLE MODO TELÃO (ON/OFF + 3 OPÇÕES) ===== */
+    (() => {
+      const KEY = "modoTelao";
+      const ui = document.getElementById("telaoUI");
+      const btn = document.getElementById("telaoBtn");
+      const opts = ui.querySelectorAll(".opt");
 
-<script>
-(() => {
-  const KEY = "modoTelao"; // compartilhado entre pagina1 e pagina2
-  const ui = document.getElementById("telaoUI");
-  const btn = document.getElementById("telaoBtn");
-  const opts = ui.querySelectorAll(".opt");
+      function limparClasses() {
+        document.body.classList.remove("telao", "telao-grande", "telao-pequeno");
+      }
 
-  function limparClasses() {
-    document.body.classList.remove("telao", "telao-grande", "telao-pequeno");
-  }
+      function aplicarModo(mode) {
+        limparClasses();
 
-  function aplicarModo(mode) {
-    limparClasses();
+        if (mode === "off" || !mode) {
+          localStorage.setItem(KEY, "off");
+        } else {
+          document.body.classList.add(mode);
+          localStorage.setItem(KEY, mode);
+        }
 
-    if (mode === "off" || !mode) {
-      localStorage.setItem(KEY, "off");
-    } else {
-      document.body.classList.add(mode);
-      localStorage.setItem(KEY, mode);
-    }
+        opts.forEach(b => b.classList.toggle("active", b.dataset.mode === (mode || "off")));
+      }
 
-    // ativa visual do botão selecionado
-    opts.forEach(b => b.classList.toggle("active", b.dataset.mode === (mode || "off")));
-  }
+      btn.addEventListener("click", () => ui.classList.toggle("open"));
 
-  // abre/fecha painel
-  btn.addEventListener("click", () => ui.classList.toggle("open"));
+      document.addEventListener("click", (e) => {
+        if (!ui.contains(e.target)) ui.classList.remove("open");
+      });
 
-  // clicar fora fecha
-  document.addEventListener("click", (e) => {
-    if (!ui.contains(e.target)) ui.classList.remove("open");
-  });
+      opts.forEach(b => {
+        b.addEventListener("click", () => {
+          aplicarModo(b.dataset.mode);
+          ui.classList.remove("open");
+        });
+      });
 
-  // selecionar modo
-  opts.forEach(b => {
-    b.addEventListener("click", () => {
-      aplicarModo(b.dataset.mode);
-      ui.classList.remove("open");
-    });
-  });
-
-  // carrega modo salvo
-  const salvo = localStorage.getItem(KEY) || "off";
-  aplicarModo(salvo);
-})();
-    <!-- ===== CONTROLE MODO TELÃO (ON/OFF + 3 OPÇÕES) ===== -->
-<div class="telao-ui" id="telaoUI">
-  <button class="btn" type="button" id="telaoBtn">MODO TELÃO</button>
-
-  <div class="panel">
-    <div class="row" style="margin-bottom:8px;">
-      <button class="opt" type="button" data-mode="off">OFF</button>
-      <button class="opt" type="button" data-mode="telao">TELÃO</button>
-      <button class="opt" type="button" data-mode="telao-grande">TELÃO-GRANDE</button>
-      <button class="opt" type="button" data-mode="telao-pequeno">TELÃO-PEQUENO</button>
-    </div>
-    <div class="hint">FICA SALVO AUTOMATICAMENTE</div>
-  </div>
-</div>
-
-<script>
-(() => {
-  const KEY = "modoTelao"; // compartilhado entre pagina1 e pagina2
-  const ui = document.getElementById("telaoUI");
-  const btn = document.getElementById("telaoBtn");
-  const opts = ui.querySelectorAll(".opt");
-
-  function limparClasses() {
-    document.body.classList.remove("telao", "telao-grande", "telao-pequeno");
-  }
-
-  function aplicarModo(mode) {
-    limparClasses();
-
-    if (mode === "off" || !mode) {
-      localStorage.setItem(KEY, "off");
-    } else {
-      document.body.classList.add(mode);
-      localStorage.setItem(KEY, mode);
-    }
-
-    // ativa visual do botão selecionado
-    opts.forEach(b => b.classList.toggle("active", b.dataset.mode === (mode || "off")));
-  }
-
-  // abre/fecha painel
-  btn.addEventListener("click", () => ui.classList.toggle("open"));
-
-  // clicar fora fecha
-  document.addEventListener("click", (e) => {
-    if (!ui.contains(e.target)) ui.classList.remove("open");
-  });
-
-  // selecionar modo
-  opts.forEach(b => {
-    b.addEventListener("click", () => {
-      aplicarModo(b.dataset.mode);
-      ui.classList.remove("open");
-    });
-  });
-
-  // carrega modo salvo
-  const salvo = localStorage.getItem(KEY) || "off";
-  aplicarModo(salvo);
-})();
-</script>
- </body>
+      aplicarModo(localStorage.getItem(KEY) || "off");
+    })();
+  </script>
+</body>
 </html>
