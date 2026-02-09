@@ -195,6 +195,11 @@
   #gruposContainer .grupo-registro:nth-child(even){
     background: #cfcfcf; /* cinza */
   }
+    /* TEXTO PRETO APENAS NOS GRUPOS CINZA */
+#gruposContainer .grupo-registro:nth-child(even),
+#gruposContainer .grupo-registro:nth-child(even) *{
+  color: #000 !important;
+}
 
   /* ===== LOGOS LATERAIS ===== */
   .lateral{
@@ -424,12 +429,12 @@
 
           <div class="linha-campo">
             <div class="rotulo">QRU</div>
-            <textarea id="qru-${idGrupo}" name="qru" class="field"></textarea>
+            <textarea id="qru-..." name="qru" class="field" spellcheck="true" lang="pt-BR"></textarea>
           </div>
 
           <div class="linha-campo">
             <div class="rotulo">QTH</div>
-            <textarea id="qth-${idGrupo}" name="qth" class="field"></textarea>
+            <textarea id="qth-..." name="qth" class="field" spellcheck="true" lang="pt-BR"></textarea>
           </div>
 
           <div class="actions">
