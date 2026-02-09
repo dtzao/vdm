@@ -232,20 +232,22 @@
     padding-left: 0;
     padding-right: 0;
   }
-/* ===== ASSINATURA FIXA NO RODAPÉ ===== */
+/* ===== ASSINATURA FIXA NO RODAPÉ (ESTÁTICA DESDE O LOAD) ===== */
 .assinatura{
-  position: fixed;
-  bottom: 8px;                 /* distância do fim da tela */
+  position: fixed;            /* FIXA NA TELA, NÃO NO CONTEÚDO */
+  bottom: 6px;                /* SEMPRE NO FIM DA TELA */
   left: 50%;
-  transform: translateX(-50%); /* centraliza perfeitamente */
+  transform: translateX(-50%);
+  width: 100%;
   text-align: center;
+
   font-size: 11px;
   font-weight: 700;
   color: rgba(255,255,255,.6);
   letter-spacing: 0.6px;
-  z-index: 3;
-  pointer-events: none;        /* não atrapalha cliques */
-  white-space: nowrap;
+
+  z-index: 999;               /* FICA ACIMA DE TUDO */
+  pointer-events: none;       /* NÃO ATRAPALHA CLIQUE */
 }
 </style>
 </head>
