@@ -2,30 +2,38 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Página 1 - Registro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>PÁGINA 1 - REGISTRO</title>
 
   <style>
     :root{
-      --bg: #c40000;          /* vermelho forte */
+      --bg: #c40000;          /* vermelho do sistema */
+      --text: #fff;
+      --muted: rgba(255,255,255,.75);
       --card: rgba(0,0,0,.12);
-      --text: #ffffff;
-      --field-bg: #ffd400;    /* amarelo */
-      --field-text: #111;
+      --border: rgba(255,255,255,.22);
       --btn: #111;
-      --btn-hover: #444;
-      --outline: #ffffff;
+      --btnHover: #444;
+
+      --radius: 14px;
+      --pad: 12px;
+
+      /* tamanho confortável */
+      --font: 16px;
+      --fontSmall: 13px;
     }
 
-    * { box-sizing: border-box; }
+    *{ box-sizing: border-box; }
 
     body{
-      margin: 0;
+      margin:0;
       background: var(--bg);
       font-family: Arial, sans-serif;
       color: var(--text);
-      padding: 20px;
-      font-size: 15px;
+      padding: 18px;
+      font-size: var(--font);
+      text-transform: uppercase;
+      letter-spacing: .35px;
     }
 
     .container{
@@ -34,91 +42,95 @@
     }
 
     .topbar{
-      display: flex;
+      display:flex;
       flex-wrap: wrap;
       gap: 12px;
       align-items: end;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     label{
-      font-weight: 700;
+      font-weight: 1000;
       display: inline-block;
       margin-bottom: 6px;
+      font-size: var(--fontSmall);
+      color: var(--muted);
+      text-align: center;
+      width: 100%;
     }
 
+    /* CAMPOS NO PADRÃO: FUNDO VERMELHO, TEXTO BRANCO, CENTRALIZADO */
     .field{
       width: 100%;
-      border: 1px solid rgba(255,255,255,.35);
-      border-radius: 8px;
-      background: var(--field-bg);
-      color: var(--field-text);
-      font-weight: 700;
-      padding: 10px 10px;
-      min-height: 40px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.08); /* vermelho "escuro" por transparência */
+      color: var(--text);
+      font-weight: 1000;
+      padding: 10px 12px;
+      min-height: 42px;
       outline: none;
+      text-align: center;
     }
-
     .field:focus{
-      outline: 3px solid var(--outline);
+      outline: 3px solid rgba(255,255,255,.9);
       outline-offset: 2px;
     }
 
     textarea.field{
-      min-height: 70px;
+      min-height: 84px;
       resize: vertical;
-      font-weight: 700;
       line-height: 1.25;
+      text-align: center; /* pedido */
     }
 
     .grupo-registro{
       background: var(--card);
-      border: 1px solid rgba(255,255,255,.22);
-      border-radius: 12px;
-      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--pad);
       margin: 14px 0;
     }
 
-    fieldset{
-      border: 0;
-      padding: 0;
-      margin: 0;
-    }
-
+    fieldset{ border:0; padding:0; margin:0; }
     legend{
-      font-weight: 800;
+      font-weight: 1000;
       margin-bottom: 10px;
+      text-align: left;
+      color: #fff;
     }
 
     .linha-unidade{
       display: grid;
-      grid-template-columns: 70px 1fr 1fr;
-      gap: 8px;
+      grid-template-columns: 90px 1fr 1fr;
+      gap: 10px;
       margin-bottom: 10px;
     }
-
-    @media (max-width: 560px){
-      .linha-unidade{
-        grid-template-columns: 1fr;
-      }
+    @media (max-width: 640px){
+      .linha-unidade{ grid-template-columns: 1fr; }
     }
 
     .linha-campo{
       display: grid;
-      grid-template-columns: 160px 1fr;
+      grid-template-columns: 180px 1fr;
       gap: 10px;
       align-items: start;
       margin: 10px 0;
     }
+    @media (max-width: 640px){
+      .linha-campo{ grid-template-columns: 1fr; }
+      .linha-campo > span{ text-align:center; }
+    }
 
-    @media (max-width: 560px){
-      .linha-campo{
-        grid-template-columns: 1fr;
-      }
+    .rotulo{
+      font-weight: 1000;
+      color: #fff;
+      padding-top: 10px;
+      text-align: left;
     }
 
     .actions{
-      display: flex;
+      display:flex;
       flex-wrap: wrap;
       gap: 10px;
       margin-top: 10px;
@@ -128,20 +140,19 @@
       padding: 10px 16px;
       background: var(--btn);
       color: var(--text);
-      border: 0;
-      border-radius: 10px;
+      border: none;
+      border-radius: 12px;
       cursor: pointer;
-      font-weight: 800;
+      font-weight: 1000;
+      text-transform: uppercase;
     }
-    .button:hover{ background: var(--btn-hover); }
+    .button:hover{ background: var(--btnHover); }
 
     .button.secondary{
-      background: rgba(255,255,255,.16);
-      border: 1px solid rgba(255,255,255,.35);
+      background: rgba(255,255,255,.14);
+      border: 1px solid rgba(255,255,255,.3);
     }
-    .button.secondary:hover{
-      background: rgba(255,255,255,.24);
-    }
+    .button.secondary:hover{ background: rgba(255,255,255,.22); }
 
     .nav-button{
       position: fixed;
@@ -149,8 +160,8 @@
       left: 12px;
       background: #fff;
       color: #000;
-      font-weight: 900;
-      padding: 10px 16px;
+      font-weight: 1000;
+      padding: 10px 14px;
       border-radius: 12px;
       text-decoration: none;
       box-shadow: 2px 2px 10px rgba(0,0,0,0.35);
@@ -159,7 +170,16 @@
     .hint{
       font-size: 12px;
       opacity: .9;
-      margin-top: 4px;
+      margin-top: 6px;
+      color: rgba(255,255,255,.85);
+      text-transform: none; /* fica melhor como frase normal */
+      letter-spacing: 0;
+      text-align: left;
+    }
+
+    /* remove setinha/estilo padrão estranho em alguns navegadores */
+    select.field{
+      appearance: auto;
     }
   </style>
 </head>
@@ -167,21 +187,21 @@
 <body>
   <main class="container">
     <header class="topbar">
-      <div style="min-width: 220px;">
-        <label for="dataSelecionada">Data do registro</label>
+      <div style="min-width: 260px;">
+        <label for="dataSelecionada">DATA DO REGISTRO</label>
         <input type="date" id="dataSelecionada" class="field" />
         <div class="hint">A data fica salva automaticamente.</div>
       </div>
 
-      <div class="actions" style="margin-top: 22px;">
-        <button type="button" class="button" id="adicionarGrupo">+ Adicionar Grupo</button>
+      <div class="actions" style="margin-top: 18px;">
+        <button type="button" class="button" id="adicionarGrupo">+ ADICIONAR GRUPO</button>
       </div>
     </header>
 
     <section id="gruposContainer" aria-live="polite"></section>
 
-    <a href="pagina2.html" class="nav-button" aria-label="Ir para a página de visualização">
-      📄 Ir para Visualização
+    <a href="pagina2.html" class="nav-button" aria-label="IR PARA VISUALIZAÇÃO">
+      📄 VISUALIZAÇÃO
     </a>
   </main>
 
@@ -194,22 +214,16 @@
     const STORAGE_REG_KEY = 'registrosPorDia';
 
     function safeParseJSON(value, fallback) {
-      try {
-        return value ? JSON.parse(value) : fallback;
-      } catch {
-        return fallback;
-      }
+      try { return value ? JSON.parse(value) : fallback; } catch { return fallback; }
     }
-
     function getRegistros() {
       return safeParseJSON(localStorage.getItem(STORAGE_REG_KEY), {});
     }
-
     function setRegistros(obj) {
       localStorage.setItem(STORAGE_REG_KEY, JSON.stringify(obj));
     }
 
-    // Carrega data salva
+    // carrega data
     campoData.value = localStorage.getItem(STORAGE_DATA_KEY) || '';
     campoData.addEventListener('change', () => {
       localStorage.setItem(STORAGE_DATA_KEY, campoData.value);
@@ -224,11 +238,11 @@
 
       form.innerHTML = `
         <fieldset>
-          <legend>Registro</legend>
+          <legend>REGISTRO</legend>
 
           <div class="linha-unidade">
             <div>
-              <label for="prefixo-${idGrupo}">Prefixo</label>
+              <label for="prefixo-${idGrupo}">PREFIXO</label>
               <input
                 id="prefixo-${idGrupo}"
                 name="prefixo"
@@ -236,13 +250,12 @@
                 class="field"
                 maxlength="3"
                 inputmode="numeric"
-                placeholder="000"
-                aria-label="Prefixo (até 3 caracteres)"
+                aria-label="PREFIXO"
               />
             </div>
 
             <div>
-              <label for="unidade-${idGrupo}">Unidade</label>
+              <label for="unidade-${idGrupo}">UNIDADE</label>
               <select id="unidade-${idGrupo}" name="unidade" class="field">
                 <option value="º BPM/M">º BPM/M</option>
                 <option value="º CPTRAN">º CPTRAN</option>
@@ -253,7 +266,7 @@
             </div>
 
             <div>
-              <label for="status-${idGrupo}">Status</label>
+              <label for="status-${idGrupo}">STATUS</label>
               <select id="status-${idGrupo}" name="status" class="field">
                 <option value="NIHIL DE COP">NIHIL DE COP</option>
                 <option value="COP SEM IMAGENS">COP SEM IMAGENS</option>
@@ -265,41 +278,41 @@
           </div>
 
           <div class="linha-campo">
-            <label for="qru-${idGrupo}">QRU:</label>
-            <textarea id="qru-${idGrupo}" name="qru" class="field" placeholder="Ex.: VTR em patrulhamento..."></textarea>
+            <span class="rotulo">QRU:</span>
+            <textarea id="qru-${idGrupo}" name="qru" class="field"></textarea>
           </div>
 
           <div class="linha-campo">
-            <label for="qth-${idGrupo}">QTH:</label>
-            <textarea id="qth-${idGrupo}" name="qth" class="field" placeholder="Ex.: Av. X, nº Y..."></textarea>
+            <span class="rotulo">QTH:</span>
+            <textarea id="qth-${idGrupo}" name="qth" class="field"></textarea>
           </div>
 
           <div class="linha-campo">
-            <label for="caract-${idGrupo}">CARACTERÍSTICAS:</label>
-            <textarea id="caract-${idGrupo}" name="caracteristicas" class="field" placeholder="Ex.: masculino, camiseta preta..."></textarea>
+            <span class="rotulo">CARACTERÍSTICAS:</span>
+            <textarea id="caract-${idGrupo}" name="caracteristicas" class="field"></textarea>
           </div>
 
           <div class="actions">
-            <button type="submit" class="button">Registrar</button>
-            <button type="button" class="button secondary" data-action="remover">Remover Grupo</button>
+            <button type="submit" class="button">REGISTRAR</button>
+            <button type="button" class="button secondary" data-action="remover">REMOVER GRUPO</button>
           </div>
         </fieldset>
       `;
 
-      // Remover grupo (UX)
+      // remover grupo
       form.addEventListener('click', (e) => {
         const btn = e.target.closest('button[data-action="remover"]');
         if (!btn) return;
         form.remove();
       });
 
-      // Submit do registro
+      // salvar registro
       form.addEventListener('submit', (e) => {
         e.preventDefault();
 
         const data = campoData.value;
         if (!data) {
-          alert('Selecione uma data!');
+          alert('SELECIONE UMA DATA!');
           campoData.focus();
           return;
         }
@@ -319,11 +332,7 @@
         registros[data] = [registro, ...(registros[data] || [])];
         setRegistros(registros);
 
-        // Limpa campos do grupo
         form.reset();
-
-        // Mantém selects no primeiro item (opcional)
-        // Se quiser manter o último status/unidade selecionado, eu ajusto.
       });
 
       return form;
