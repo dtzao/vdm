@@ -252,41 +252,6 @@
   pointer-events: none;
   white-space: nowrap;
 }
-    /* ===== CORREÇÃO: CAMPOS DE BAIXO EM COLUNA (1 POR LINHA) ===== */
-
-/* garante que a área do formulário não fique em colunas apertadas */
-.grupo-registro{
-  width: 100%;
-}
-
-/* força cada bloco QRU/QTH/CARACTERÍSTICAS virar uma “linha” inteira */
-.linha-campo{
-  display: grid !important;
-  grid-template-columns: 1fr !important;
-  justify-items: stretch !important;
-  gap: 8px !important;
-  margin: 12px 0 !important;
-}
-
-/* rótulo central e em cima */
-.rotulo{
-  text-align: center !important;
-  width: 100%;
-}
-
-/* textarea ocupa tudo */
-.linha-campo .field{
-  width: 100% !important;
-}
-
-/* botões alinhados e centralizados */
-.actions{
-  display: flex !important;
-  justify-content: center !important;
-  gap: 12px !important;
-  flex-wrap: wrap !important;
-  margin-top: 12px !important;
-}
 </style>
 </head>
 
@@ -374,16 +339,16 @@
             </div>
 
             <div>
-  <label for="cop-...">Nº DE COP</label>
-  <input
-    id="cop-..."
-    name="cop"
-    type="text"
-    class="field"
-    inputmode="numeric"
-    placeholder=""
-  />
-</div>
+              <label for="status-${idGrupo}">STATUS</label>
+              <select id="status-${idGrupo}" name="status" class="field">
+                <option value="NIHIL DE COP">NIHIL DE COP</option>
+                <option value="COP SEM IMAGENS">COP SEM IMAGENS</option>
+                <option value="COP LADO ESQUERDO">COP LADO ESQUERDO</option>
+                <option value="COP LADO DIREITO">COP LADO DIREITO</option>
+                <option value="COP EM AMBOS OS LADOS">COP EM AMBOS OS LADOS</option>
+              </select>
+            </div>
+          </div>
 
           <div class="linha-campo">
             <div class="rotulo">QRU</div>
