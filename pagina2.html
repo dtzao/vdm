@@ -217,12 +217,32 @@ label{
   padding-right: 0px;
 }
 
+/* NO CELULAR, SOME */
 @media (max-width: 900px){
   .lateral{ display: none; }
   .container{
     padding-left: 0;
     padding-right: 0;
   }
+}  /* <-- FECHA O @media AQUI */
+
+/* ===== ASSINATURA FIXA NO RODAPÉ (ESTÁTICA DESDE O LOAD) ===== */
+.assinatura{
+  position: fixed;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  text-align: center;
+
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255,255,255,.6);
+  letter-spacing: 0.6px;
+
+  z-index: 999;
+  pointer-events: none;
+  white-space: nowrap;
 }
 </style>
 </head>
@@ -242,6 +262,10 @@ label{
 <input type="date" id="dataSelecionada" class="field">
 
 <div id="dados"></div>
+
+  <footer class="assinatura">
+  SISTEMA DE APOIO DESENVOLVIDO: SD PM 154.466-7 ANDERSON SILVA
+</footer>
 
 </main>
 
