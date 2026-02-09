@@ -8,9 +8,8 @@
 <style>
 :root{
   --bg:#000;
-  --panel:#000;
   --text:#fff;
-  --muted:rgba(255,255,255,.75);
+  --muted:rgba(255,255,255,.7);
   --border:rgba(255,255,255,.18);
   --accent:#ffd400; /* AMARELO */
   --maxw:820px;
@@ -36,7 +35,7 @@ body{
   max-width:var(--maxw);
   margin:0 auto;
   text-align:center;
-  padding-bottom:80px;
+  padding-bottom:90px;
 }
 
 label{
@@ -61,17 +60,7 @@ label{
   font-size:var(--font);
 }
 
-.alerta-box{
-  display:none;
-  background:var(--accent);
-  color:#000;
-  font-weight:1000;
-  font-size:var(--font);
-  padding:10px;
-  border-radius:var(--radius);
-  margin:12px 0;
-}
-
+/* ===== CARD ===== */
 .info{
   margin:12px auto;
   padding:var(--pad);
@@ -80,10 +69,7 @@ label{
   border-radius:var(--radius);
 }
 
-.topline{
-  text-align:center;
-}
-
+/* TOPO CENTRAL */
 .time{
   font-weight:1000;
   font-size:var(--font);
@@ -96,6 +82,7 @@ label{
   margin-top:4px;
 }
 
+/* TEXTO */
 .meta{
   margin-top:10px;
   display:grid;
@@ -115,18 +102,20 @@ label{
   margin-bottom:4px;
 }
 
+/* SELEÇÃO */
 .sel{
-  margin-top:8px;
+  margin-top:10px;
   display:flex;
   justify-content:center;
-  gap:8px;
+  align-items:center;
+  gap:10px;
   font-weight:1000;
   font-size:var(--small);
 }
 
+/* SETA */
 .toggle{
   display:none;
-  margin-top:8px;
   padding:8px 14px;
   border-radius:12px;
   border:1px solid var(--border);
@@ -136,6 +125,7 @@ label{
   cursor:pointer;
 }
 
+/* EDITOR */
 .edit-panel{
   display:none;
   margin-top:12px;
@@ -222,18 +212,26 @@ const dados=document.getElementById('dados');
 inputData.value=localStorage.getItem('dataSelecionada')||'';
 inputData.onchange=()=>{localStorage.setItem('dataSelecionada',inputData.value);carregar()}
 
+function getRegs(){
+  return JSON.parse(localStorage.getItem('registrosPorDia'))||{};
+}
+
+function salvarRegs(r){
+  localStorage.setItem('registrosPorDia',JSON.stringify(r));
+}
+
 function carregar(){
   dados.innerHTML='';
   const data=inputData.value;
-  const registros=JSON.parse(localStorage.getItem('registrosPorDia'))||{};
-  (registros[data]||[]).forEach((r,i)=>{
+  const regs=getRegs();
+
+  (regs[data]||[]).forEach((r,i)=>{
     const d=document.createElement('div');
     d.className='info';
+
     d.innerHTML=`
-      <div class="topline">
-        <div class="time">${r.horario||''}</div>
-        <div class="topo">${r.prefixo||''} ${r.unidade||''} - ${r.status||''}</div>
-      </div>
+      <div class="time">${r.horario||''}</div>
+      <div class="topo">${r.prefixo||''} ${r.unidade||''} - ${r.status||''}</div>
 
       <div class="meta">
         ${r.qru?`<div class="line"><b>QRU</b>${r.qru}</div>`:''}
@@ -244,19 +242,65 @@ function carregar(){
       <div class="sel">
         <input type="checkbox" data-i="${i}">
         SELECIONAR
+        <button class="toggle">▼</button>
+      </div>
+
+      <div class="edit-panel">
+        <input class="edit-field" value="${r.prefixo||''}">
+        <input class="edit-field" value="${r.unidade||''}">
+        <input class="edit-field" value="${r.status||''}">
+        <textarea class="edit-field">${r.qru||''}</textarea>
+        <textarea class="edit-field">${r.qth||''}</textarea>
+        <textarea class="edit-field">${r.caracteristicas||''}</textarea>
+
+        <div class="actions">
+          <button class="btn primary">SALVAR</button>
+          <button class="btn danger">CANCELAR</button>
+        </div>
       </div>
     `;
+
+    const cb=d.querySelector('input[type=checkbox]');
+    const toggle=d.querySelector('.toggle');
+    const panel=d.querySelector('.edit-panel');
+
+    cb.onchange=()=>{
+      toggle.style.display=cb.checked?'inline-block':'none';
+      if(!cb.checked){panel.style.display='none';toggle.textContent='▼'}
+    };
+
+    toggle.onclick=()=>{
+      panel.style.display=panel.style.display==='block'?'none':'block';
+      toggle.textContent=panel.style.display==='block'?'▲':'▼';
+    };
+
+    d.querySelector('.primary').onclick=()=>{
+      const f=d.querySelectorAll('.edit-field');
+      regs[data][i]={
+        horario:r.horario,
+        prefixo:f[0].value,
+        unidade:f[1].value,
+        status:f[2].value,
+        qru:f[3].value,
+        qth:f[4].value,
+        caracteristicas:f[5].value
+      };
+      salvarRegs(regs);
+      carregar();
+    };
+
+    d.querySelector('.danger').onclick=carregar;
+
     dados.appendChild(d);
   });
 }
 
 function excluirSelecionados(){
   const data=inputData.value;
-  const registros=JSON.parse(localStorage.getItem('registrosPorDia'))||{};
-  const lista=registros[data]||[];
+  const regs=getRegs();
   const checks=[...document.querySelectorAll('input[type=checkbox]:checked')].map(c=>+c.dataset.i);
-  registros[data]=lista.filter((_,i)=>!checks.includes(i));
-  localStorage.setItem('registrosPorDia',JSON.stringify(registros));
+  regs[data]=(regs[data]||[]).filter((_,i)=>!checks.includes(i));
+  salvarRegs(regs);
   carregar();
 }
 
