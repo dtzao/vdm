@@ -326,6 +326,81 @@ body.telao-pequeno { zoom: 0.86; }
   color: rgba(255,255,255,.7);
   text-align: center;
 }
+    /* ===== MODO TELÃO (ESCALAS) ===== */
+body.telao { zoom: 0.92; }
+body.telao-grande { zoom: 0.98; }
+body.telao-pequeno { zoom: 0.86; }
+
+/* fallback se zoom não existir */
+@supports not (zoom: 1) {
+  body.telao { transform: scale(0.92); transform-origin: top center; }
+  body.telao-grande { transform: scale(0.98); transform-origin: top center; }
+  body.telao-pequeno { transform: scale(0.86); transform-origin: top center; }
+}
+
+/* ===== CONTROLE (BOTÃO) ===== */
+.telao-ui{
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 2000;
+  font-family: Arial, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: .35px;
+}
+
+.telao-ui .btn{
+  background: rgba(0,0,0,.85);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-weight: 1000;
+  cursor: pointer;
+}
+
+.telao-ui .panel{
+  margin-top: 8px;
+  background: rgba(0,0,0,.88);
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 14px;
+  padding: 10px;
+  display: none;
+  min-width: 220px;
+}
+
+.telao-ui.open .panel{ display: block; }
+
+.telao-ui .row{
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.telao-ui .opt{
+  background: rgba(255,255,255,.08);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 12px;
+  padding: 8px 10px;
+  font-weight: 1000;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.telao-ui .opt.active{
+  border-color: rgba(255,255,255,.7);
+  background: rgba(255,255,255,.16);
+}
+
+.telao-ui .hint{
+  margin-top: 8px;
+  font-size: 11px;
+  color: rgba(255,255,255,.7);
+  text-align: center;
+}
+
 
 </style>
 </head>
@@ -549,6 +624,66 @@ body.telao-pequeno { zoom: 0.86; }
   const salvo = localStorage.getItem(KEY) || "off";
   aplicarModo(salvo);
 })();
-  </script>
-</body>
+    <!-- ===== CONTROLE MODO TELÃO (ON/OFF + 3 OPÇÕES) ===== -->
+<div class="telao-ui" id="telaoUI">
+  <button class="btn" type="button" id="telaoBtn">MODO TELÃO</button>
+
+  <div class="panel">
+    <div class="row" style="margin-bottom:8px;">
+      <button class="opt" type="button" data-mode="off">OFF</button>
+      <button class="opt" type="button" data-mode="telao">TELÃO</button>
+      <button class="opt" type="button" data-mode="telao-grande">TELÃO-GRANDE</button>
+      <button class="opt" type="button" data-mode="telao-pequeno">TELÃO-PEQUENO</button>
+    </div>
+    <div class="hint">FICA SALVO AUTOMATICAMENTE</div>
+  </div>
+</div>
+
+<script>
+(() => {
+  const KEY = "modoTelao"; // compartilhado entre pagina1 e pagina2
+  const ui = document.getElementById("telaoUI");
+  const btn = document.getElementById("telaoBtn");
+  const opts = ui.querySelectorAll(".opt");
+
+  function limparClasses() {
+    document.body.classList.remove("telao", "telao-grande", "telao-pequeno");
+  }
+
+  function aplicarModo(mode) {
+    limparClasses();
+
+    if (mode === "off" || !mode) {
+      localStorage.setItem(KEY, "off");
+    } else {
+      document.body.classList.add(mode);
+      localStorage.setItem(KEY, mode);
+    }
+
+    // ativa visual do botão selecionado
+    opts.forEach(b => b.classList.toggle("active", b.dataset.mode === (mode || "off")));
+  }
+
+  // abre/fecha painel
+  btn.addEventListener("click", () => ui.classList.toggle("open"));
+
+  // clicar fora fecha
+  document.addEventListener("click", (e) => {
+    if (!ui.contains(e.target)) ui.classList.remove("open");
+  });
+
+  // selecionar modo
+  opts.forEach(b => {
+    b.addEventListener("click", () => {
+      aplicarModo(b.dataset.mode);
+      ui.classList.remove("open");
+    });
+  });
+
+  // carrega modo salvo
+  const salvo = localStorage.getItem(KEY) || "off";
+  aplicarModo(salvo);
+})();
+</script>
+ </body>
 </html>
