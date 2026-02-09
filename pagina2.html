@@ -35,9 +35,35 @@ body{
   max-width:var(--maxw);
   margin:0 auto;
   text-align:center;
-  padding-bottom:90px;
+  padding-bottom:110px; /* espaço para botões/assinatura */
 }
 
+/* ===== LATERAIS (LOGO) ===== */
+.lateral{
+  position: fixed;
+  top: 120px;
+  bottom: 120px;
+  width: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 2;
+}
+.lateral img{
+  width: 140px;
+  height: auto;
+  opacity: 0.9;
+  filter: drop-shadow(0 8px 20px rgba(0,0,0,.6));
+}
+.lateral.esquerda{ left: 16px; }
+.lateral.direita{ right: 16px; }
+
+@media (max-width: 900px){
+  .lateral{ display:none; }
+}
+
+/* ===== DATA ===== */
 label{
   display:block;
   font-weight:1000;
@@ -60,7 +86,85 @@ label{
   font-size:var(--font);
 }
 
-/* ===== CARD ===== */
+/* ===== ALERTA FIXO NO TOPO ===== */
+.alerta-topo{
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(var(--maxw), calc(100% - 24px));
+  z-index: 1000;
+  display: none;
+}
+.alerta-box{
+  background: var(--accent);
+  color:#000;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.25);
+  padding: 10px 12px;
+  font-weight: 1000;
+  font-size: var(--font);
+  white-space: pre-wrap;  /* mantém quebras de linha */
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,.45);
+}
+.alerta-actions{
+  margin-top: 8px;
+  display:flex;
+  gap: 10px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+.smallbtn{
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,.25);
+  background: #000;
+  color:#fff;
+  font-weight: 1000;
+  cursor:pointer;
+  font-size: var(--small);
+}
+.smallbtn:hover{ opacity:.9; }
+
+/* input do alerta (aparece quando clicar no botão) */
+.alerta-input{
+  display:none;
+  position: fixed;
+  top: 110px; /* abaixo do alerta */
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(var(--maxw), calc(100% - 24px));
+  z-index: 1001;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: #000;
+  color:#fff;
+  font-weight: 1000;
+  font-size: var(--font);
+  padding: 12px;
+  outline:none;
+  white-space: pre-wrap;
+  text-align: center;
+  min-height: 110px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.45);
+}
+
+/* dica pequena */
+.dica{
+  display:none;
+  position: fixed;
+  top: 86px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(var(--maxw), calc(100% - 24px));
+  z-index: 1002;
+  font-size: var(--small);
+  color: rgba(255,255,255,.8);
+  text-align:center;
+}
+
+/* ===== CARDS ===== */
 .info{
   margin:12px auto;
   padding:var(--pad);
@@ -69,7 +173,6 @@ label{
   border-radius:var(--radius);
 }
 
-/* TOPO CENTRAL */
 .time{
   font-weight:1000;
   font-size:var(--font);
@@ -82,7 +185,6 @@ label{
   margin-top:4px;
 }
 
-/* TEXTO */
 .meta{
   margin-top:10px;
   display:grid;
@@ -102,7 +204,7 @@ label{
   margin-bottom:4px;
 }
 
-/* SELEÇÃO */
+/* seleção + seta */
 .sel{
   margin-top:10px;
   display:flex;
@@ -113,7 +215,6 @@ label{
   font-size:var(--small);
 }
 
-/* SETA */
 .toggle{
   display:none;
   padding:8px 14px;
@@ -125,7 +226,7 @@ label{
   cursor:pointer;
 }
 
-/* EDITOR */
+/* editor */
 .edit-panel{
   display:none;
   margin-top:12px;
@@ -161,10 +262,10 @@ label{
   font-weight:1000;
   cursor:pointer;
 }
-
 .btn.primary{border-color:var(--accent)}
 .btn.danger{color:var(--accent)}
 
+/* botões fixos */
 .nav-button{
   position:fixed;
   bottom:12px;
@@ -175,6 +276,7 @@ label{
   padding:10px 14px;
   border-radius:12px;
   text-decoration:none;
+  z-index: 50;
 }
 
 .delete-button{
@@ -188,45 +290,26 @@ label{
   border-radius:12px;
   border:none;
   cursor:pointer;
+  z-index: 50;
 }
-  /* ===== LOGOS LATERAIS ===== */
-.lateral{
+
+/* botão alerta */
+.alerta-button{
   position: fixed;
-  top: 120px;
-  bottom: 120px;
-  width: 160px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  z-index: 2;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  padding:10px 14px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.2);
+  background:#000;
+  color:#fff;
+  font-weight:1000;
+  cursor:pointer;
 }
 
-.lateral img{
-  width: 140px;
-  height: auto;
-  opacity: 0.9;
-  filter: drop-shadow(0 8px 20px rgba(0,0,0,.6));
-}
-
-.lateral.esquerda{ left: 16px; }
-.lateral.direita{ right: 16px; }
-
-.container{
-  padding-left: 0px;
-  padding-right: 0px;
-}
-
-/* NO CELULAR, SOME */
-@media (max-width: 900px){
-  .lateral{ display: none; }
-  .container{
-    padding-left: 0;
-    padding-right: 0;
-  }
-}  /* <-- FECHA O @media AQUI */
-
-/* ===== ASSINATURA FIXA NO RODAPÉ (ESTÁTICA DESDE O LOAD) ===== */
+/* ===== ASSINATURA FIXA ===== */
 .assinatura{
   position: fixed;
   bottom: 6px;
@@ -234,12 +317,10 @@ label{
   transform: translateX(-50%);
   width: 100%;
   text-align: center;
-
   font-size: 11px;
   font-weight: 700;
   color: rgba(255,255,255,.6);
   letter-spacing: 0.6px;
-
   z-index: 999;
   pointer-events: none;
   white-space: nowrap;
@@ -248,125 +329,224 @@ label{
 </head>
 
 <body>
-  <!-- LOGOS LATERAIS - PAGINA 2 -->
+
+<!-- LOGOS LATERAIS - PAGINA 2 -->
 <div class="lateral esquerda">
   <img src="imgb2.png" alt="Logo B Página 2">
 </div>
-
 <div class="lateral direita">
   <img src="imgb2.png" alt="Logo B Página 2">
 </div>
+
+<!-- ALERTA FIXO -->
+<div class="alerta-topo" id="alertaTopo">
+  <div class="alerta-box" id="alertaBox"></div>
+  <div class="alerta-actions">
+    <button class="smallbtn" type="button" id="btnEditarAlerta">EDITAR</button>
+    <button class="smallbtn" type="button" id="btnRemoverAlerta">REMOVER</button>
+  </div>
+</div>
+
+<div class="dica" id="dicaAtalho">ENTER: QUEBRA LINHA | SHIFT+ENTER: FIXAR ALERTA</div>
+<textarea class="alerta-input" id="inputAlerta" placeholder="DIGITE O ALERTA... (SHIFT+ENTER PARA FIXAR)"></textarea>
+
 <main class="container">
-
-<label>DATA</label>
-<input type="date" id="dataSelecionada" class="field">
-
-<div id="dados"></div>
-
-  <footer class="assinatura">
-  SISTEMA DE APOIO DESENVOLVIDO: SD PM 154.466-7 ANDERSON SILVA
-</footer>
-
+  <label>DATA</label>
+  <input type="date" id="dataSelecionada" class="field">
+  <div id="dados"></div>
 </main>
 
 <a href="pagina1.html" class="nav-button">⬅ REGISTRO</a>
+<button class="alerta-button" type="button" id="btnAbrirAlerta">🚨 ALERTA</button>
 <button class="delete-button" onclick="excluirSelecionados()">🗑 APAGAR</button>
 
+<footer class="assinatura">
+  SISTEMA DE APOIO DESENVOLVIDO: SD PM 154.466-7 ANDERSON SILVA
+</footer>
+
 <script>
-const inputData=document.getElementById('dataSelecionada');
-const dados=document.getElementById('dados');
+const inputData = document.getElementById('dataSelecionada');
+const dados = document.getElementById('dados');
 
-inputData.value=localStorage.getItem('dataSelecionada')||'';
-inputData.onchange=()=>{localStorage.setItem('dataSelecionada',inputData.value);carregar()}
+const alertaTopo = document.getElementById('alertaTopo');
+const alertaBox = document.getElementById('alertaBox');
+const inputAlerta = document.getElementById('inputAlerta');
+const btnAbrirAlerta = document.getElementById('btnAbrirAlerta');
+const btnEditarAlerta = document.getElementById('btnEditarAlerta');
+const btnRemoverAlerta = document.getElementById('btnRemoverAlerta');
+const dicaAtalho = document.getElementById('dicaAtalho');
 
-function getRegs(){
-  return JSON.parse(localStorage.getItem('registrosPorDia'))||{};
+const KEY_DATA = 'dataSelecionada';
+const KEY_REG = 'registrosPorDia';
+const KEY_ALERT = 'alertasPorDia';
+
+function getRegs(){ return JSON.parse(localStorage.getItem(KEY_REG)) || {}; }
+function salvarRegs(r){ localStorage.setItem(KEY_REG, JSON.stringify(r)); }
+
+function getAlertas(){ return JSON.parse(localStorage.getItem(KEY_ALERT)) || {}; }
+function salvarAlertas(a){ localStorage.setItem(KEY_ALERT, JSON.stringify(a)); }
+
+inputData.value = localStorage.getItem(KEY_DATA) || '';
+inputData.onchange = () => {
+  localStorage.setItem(KEY_DATA, inputData.value);
+  carregar();
+};
+
+function mostrarAlertaTopo(texto){
+  // sirene no começo
+  alertaBox.textContent = "🚨 " + (texto || "");
+  alertaTopo.style.display = 'block';
 }
 
-function salvarRegs(r){
-  localStorage.setItem('registrosPorDia',JSON.stringify(r));
+function esconderAlertaTopo(){
+  alertaTopo.style.display = 'none';
 }
+
+function abrirInputAlerta(prefill){
+  inputAlerta.style.display = 'block';
+  dicaAtalho.style.display = 'block';
+  inputAlerta.value = prefill || '';
+  inputAlerta.focus();
+}
+
+function fecharInputAlerta(){
+  inputAlerta.style.display = 'none';
+  dicaAtalho.style.display = 'none';
+  inputAlerta.value = '';
+}
+
+btnAbrirAlerta.onclick = () => {
+  const data = inputData.value;
+  if(!data){ alert("SELECIONE UMA DATA!"); inputData.focus(); return; }
+  abrirInputAlerta('');
+};
+
+btnEditarAlerta.onclick = () => {
+  const data = inputData.value;
+  const alertas = getAlertas();
+  abrirInputAlerta(alertas[data] || '');
+};
+
+btnRemoverAlerta.onclick = () => {
+  const data = inputData.value;
+  if(!data) return;
+  const alertas = getAlertas();
+  delete alertas[data];
+  salvarAlertas(alertas);
+  fecharInputAlerta();
+  carregar();
+};
+
+// ENTER = quebra linha (normal).
+// SHIFT+ENTER = FIXAR alerta (salvar e fechar).
+inputAlerta.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && e.shiftKey) {
+    e.preventDefault();
+    const data = inputData.value;
+    if(!data){ alert("SELECIONE UMA DATA!"); inputData.focus(); return; }
+    const texto = inputAlerta.value.trim();
+    if(!texto){ fecharInputAlerta(); return; }
+    const alertas = getAlertas();
+    alertas[data] = texto;
+    salvarAlertas(alertas);
+    fecharInputAlerta();
+    carregar();
+  }
+});
 
 function carregar(){
-  dados.innerHTML='';
-  const data=inputData.value;
-  const regs=getRegs();
+  dados.innerHTML = '';
+  const data = inputData.value;
 
-  (regs[data]||[]).forEach((r,i)=>{
-    const d=document.createElement('div');
-    d.className='info';
+  // ALERTA
+  const alertas = getAlertas();
+  if(data && alertas[data]){
+    mostrarAlertaTopo(alertas[data]);
+  } else {
+    esconderAlertaTopo();
+  }
 
-    d.innerHTML=`
-      <div class="time">${r.horario||''}</div>
-      <div class="topo">${r.prefixo||''} ${r.unidade||''} - ${r.status||''}</div>
+  // REGISTROS
+  const regs = getRegs();
+  (regs[data] || []).forEach((r, i) => {
+    const d = document.createElement('div');
+    d.className = 'info';
+
+    d.innerHTML = `
+      <div class="time">${r.horario || ''}</div>
+      <div class="topo">${(r.prefixo || '')} ${(r.unidade || '')} - ${(r.status || '')}</div>
 
       <div class="meta">
-        ${r.qru?`<div class="line"><b>QRU</b>${r.qru}</div>`:''}
-        ${r.qth?`<div class="line"><b>QTH</b>${r.qth}</div>`:''}
-        ${r.caracteristicas?`<div class="line"><b>CARACTERÍSTICAS</b>${r.caracteristicas}</div>`:''}
+        ${r.qru ? `<div class="line"><b>QRU</b>${r.qru}</div>` : ''}
+        ${r.qth ? `<div class="line"><b>QTH</b>${r.qth}</div>` : ''}
+        ${r.caracteristicas ? `<div class="line"><b>CARACTERÍSTICAS</b>${r.caracteristicas}</div>` : ''}
       </div>
 
       <div class="sel">
         <input type="checkbox" data-i="${i}">
         SELECIONAR
-        <button class="toggle">▼</button>
+        <button class="toggle" type="button">▼</button>
       </div>
 
       <div class="edit-panel">
-        <input class="edit-field" value="${r.prefixo||''}">
-        <input class="edit-field" value="${r.unidade||''}">
-        <input class="edit-field" value="${r.status||''}">
-        <textarea class="edit-field">${r.qru||''}</textarea>
-        <textarea class="edit-field">${r.qth||''}</textarea>
-        <textarea class="edit-field">${r.caracteristicas||''}</textarea>
+        <input class="edit-field" value="${r.prefixo || ''}">
+        <input class="edit-field" value="${r.unidade || ''}">
+        <input class="edit-field" value="${r.status || ''}">
+        <textarea class="edit-field">${r.qru || ''}</textarea>
+        <textarea class="edit-field">${r.qth || ''}</textarea>
+        <textarea class="edit-field">${r.caracteristicas || ''}</textarea>
 
         <div class="actions">
-          <button class="btn primary">SALVAR</button>
-          <button class="btn danger">CANCELAR</button>
+          <button class="btn primary" type="button">SALVAR</button>
+          <button class="btn danger" type="button">CANCELAR</button>
         </div>
       </div>
     `;
 
-    const cb=d.querySelector('input[type=checkbox]');
-    const toggle=d.querySelector('.toggle');
-    const panel=d.querySelector('.edit-panel');
+    const cb = d.querySelector('input[type="checkbox"]');
+    const toggle = d.querySelector('.toggle');
+    const panel = d.querySelector('.edit-panel');
 
-    cb.onchange=()=>{
-      toggle.style.display=cb.checked?'inline-block':'none';
-      if(!cb.checked){panel.style.display='none';toggle.textContent='▼'}
+    cb.onchange = () => {
+      toggle.style.display = cb.checked ? 'inline-block' : 'none';
+      if(!cb.checked){
+        panel.style.display = 'none';
+        toggle.textContent = '▼';
+      }
     };
 
-    toggle.onclick=()=>{
-      panel.style.display=panel.style.display==='block'?'none':'block';
-      toggle.textContent=panel.style.display==='block'?'▲':'▼';
+    toggle.onclick = () => {
+      const aberto = panel.style.display === 'block';
+      panel.style.display = aberto ? 'none' : 'block';
+      toggle.textContent = aberto ? '▼' : '▲';
     };
 
-    d.querySelector('.primary').onclick=()=>{
-      const f=d.querySelectorAll('.edit-field');
-      regs[data][i]={
-        horario:r.horario,
-        prefixo:f[0].value,
-        unidade:f[1].value,
-        status:f[2].value,
-        qru:f[3].value,
-        qth:f[4].value,
-        caracteristicas:f[5].value
+    d.querySelector('.primary').onclick = () => {
+      const f = d.querySelectorAll('.edit-field');
+      regs[data][i] = {
+        horario: r.horario,
+        prefixo: f[0].value,
+        unidade: f[1].value,
+        status: f[2].value,
+        qru: f[3].value,
+        qth: f[4].value,
+        caracteristicas: f[5].value
       };
       salvarRegs(regs);
       carregar();
     };
 
-    d.querySelector('.danger').onclick=carregar;
+    d.querySelector('.danger').onclick = () => carregar();
 
     dados.appendChild(d);
   });
 }
 
 function excluirSelecionados(){
-  const data=inputData.value;
-  const regs=getRegs();
-  const checks=[...document.querySelectorAll('input[type=checkbox]:checked')].map(c=>+c.dataset.i);
-  regs[data]=(regs[data]||[]).filter((_,i)=>!checks.includes(i));
+  const data = inputData.value;
+  const regs = getRegs();
+  const checks = [...document.querySelectorAll('input[type=checkbox]:checked')].map(c => +c.dataset.i);
+  regs[data] = (regs[data] || []).filter((_, i) => !checks.includes(i));
   salvarRegs(regs);
   carregar();
 }
