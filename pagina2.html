@@ -189,10 +189,53 @@ label{
   border:none;
   cursor:pointer;
 }
+  /* ===== LOGOS LATERAIS ===== */
+.lateral{
+  position: fixed;
+  top: 120px;
+  bottom: 120px;
+  width: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.lateral img{
+  width: 140px;
+  height: auto;
+  opacity: 0.9;
+  filter: drop-shadow(0 8px 20px rgba(0,0,0,.6));
+}
+
+.lateral.esquerda{ left: 16px; }
+.lateral.direita{ right: 16px; }
+
+.container{
+  padding-left: 190px;
+  padding-right: 190px;
+}
+
+@media (max-width: 900px){
+  .lateral{ display: none; }
+  .container{
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
 </style>
 </head>
 
 <body>
+  <!-- LOGOS LATERAIS - PAGINA 2 -->
+<div class="lateral esquerda">
+  <img src="imgb2.png" alt="Logo B Página 2">
+</div>
+
+<div class="lateral direita">
+  <img src="imgb2.png" alt="Logo B Página 2">
+</div>
 <main class="container">
 
 <label>DATA</label>
