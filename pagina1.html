@@ -45,6 +45,7 @@
     justify-items: center;
     gap: 10px;
     padding-bottom: 70px;
+    position: relative;
   }
 
   .panel{
@@ -208,8 +209,8 @@
 }
   /* ===== LOGOS LATERAIS ===== */
   .lateral{
-  position: fixed;
-  top: 40px;          /* ajusta altura vertical */
+  position: absolute;
+  top: 60px;   /* ajusta altura */
   width: 160px;
   display: flex;
   align-items: center;
@@ -224,8 +225,8 @@
     opacity: 0.9;
     filter: drop-shadow(0 8px 20px rgba(0,0,0,.6));
   }
-  .lateral.esquerda{ left: 200px; }
-  .lateral.direita{ right: 200px; }
+  .lateral.esquerda{ left: -120px; }
+  .lateral.direita{ right: -120px; }
 
   @media (max-width: 900px){
     .lateral{ display: none; }
