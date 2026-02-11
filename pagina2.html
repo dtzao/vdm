@@ -36,13 +36,13 @@ body{
   margin:0 auto;
   text-align:center;
   padding-bottom:110px; /* espaço para botões/assinatura */
+  position: relative;
 }
 
 /* ===== LATERAIS (LOGO) ===== */
 .lateral{
-  position: fixed;
-  top: 120px;
-  bottom: 120px;
+  position: absolute;
+  top: 60px;   /* ajusta altura */
   width: 160px;
   display: flex;
   align-items: center;
@@ -50,14 +50,15 @@ body{
   pointer-events: none;
   z-index: 2;
 }
+
 .lateral img{
   width: 140px;
   height: auto;
   opacity: 0.9;
   filter: drop-shadow(0 8px 20px rgba(0,0,0,.6));
 }
-.lateral.esquerda{ left: 16px; }
-.lateral.direita{ right: 16px; }
+.lateral.esquerda{ left: 120px; }
+.lateral.direita{ right: 120px; }
 
 @media (max-width: 900px){
   .lateral{ display:none; }
